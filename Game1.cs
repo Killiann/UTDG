@@ -9,33 +9,41 @@ namespace UTDG
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        private readonly TileMap tileMap;
+        private readonly Camera camera;
+        private readonly Player player;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            tileMap = new TileMap();
+            camera = new Camera();
+            player = new Player(new Vector2(320, 320));
         }
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            tileMap.LoadContent(this);
+            player.LoadContent(this);
 
-            // TODO: use this.Content to load your game content here
+            camera.viewportWidth = GraphicsDevice.Viewport.Width;
+            camera.viewportHeight = GraphicsDevice.Viewport.Height;
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            camera.SetPosition(player.GetPosition());
 
-            // TODO: Add your update logic here
+            player.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -44,8 +52,13 @@ namespace UTDG
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            _spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend,
+            null, null, null, null, camera.TranslationMatrix);
 
+            tileMap.Draw(_spriteBatch);
+            player.Draw(_spriteBatch);
+
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }
