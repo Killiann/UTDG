@@ -25,15 +25,14 @@ namespace UTDG
             get
             {
                 return Matrix.CreateTranslation(-(int)position.X, -(int)position.Y, 0)
-
-                    * Matrix.CreateScale(scale, scale, 0)
+                    * Matrix.CreateScale(scale)
                     * Matrix.CreateTranslation(new Vector3(ViewPortCentre, 0));
             }
         }
 
         public Camera()
         {
-            scale = 0.7f;
+            scale = 0.8f;
         }
 
         public void SetPosition(Vector2 newPosition)

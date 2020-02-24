@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
 
 namespace UTDG
 {
@@ -13,6 +15,10 @@ namespace UTDG
         private readonly Camera camera;
         private readonly Player player;
 
+        Random rnd;
+
+        private List<GameObject> gameObjects;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -22,6 +28,12 @@ namespace UTDG
             tileMap = new TileMap();
             camera = new Camera();
             player = new Player(new Vector2(320, 320));
+
+            rnd = new Random();
+
+            gameObjects = new List<GameObject>();
+
+            gameObjects.Add(new Ranged(tileMap.GetPXPosition(new Vector2(3, 10)), 0 , 20.0f, 20.0f));                       
         }
 
         protected override void Initialize()
@@ -35,6 +47,10 @@ namespace UTDG
             tileMap.LoadContent(this);
             player.LoadContent(this);
 
+            foreach(GameObject obj in gameObjects){
+                obj.LoadContent(this);
+            }
+
             camera.viewportWidth = GraphicsDevice.Viewport.Width;
             camera.viewportHeight = GraphicsDevice.Viewport.Height;
         }
@@ -42,9 +58,7 @@ namespace UTDG
         protected override void Update(GameTime gameTime)
         {
             camera.SetPosition(player.GetPosition());
-
-            player.Update(gameTime);
-
+            player.Update(gameTime, camera.TranslationMatrix);
             base.Update(gameTime);
         }
 
@@ -52,10 +66,14 @@ namespace UTDG
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            _spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend,
+            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
             null, null, null, null, camera.TranslationMatrix);
 
             tileMap.Draw(_spriteBatch);
+            foreach (GameObject obj in gameObjects)
+            {
+                obj.Draw(_spriteBatch);
+            }
             player.Draw(_spriteBatch);
 
             _spriteBatch.End();
