@@ -3,3 +3,8 @@
 ################################################################################
 
 /.vs/UTDG/v15/Server/sqlite3
+/obj/UTDG.csproj.nuget.g.targets
+/obj/UTDG.csproj.nuget.g.props
+/obj/UTDG.csproj.nuget.cache
+/obj/project.assets.json
+/obj/Debug/netcoreapp2.1
