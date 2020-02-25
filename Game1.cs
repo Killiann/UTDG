@@ -42,7 +42,9 @@ namespace UTDG
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //adding objects to scene
-            gameObjects.Add(new Ranged(tileMap.GetPXPosition(new Vector2(3, 10)), gameObjects.Count, "pewpew", 20.0f, 20.0f, 6));
+            gameObjects.Add(new Ranged(tileMap.GetPXPosition(new Vector2(3, 3)), "pewpew", 20.0f, 20.0f, 6));
+            gameObjects.Add(new Melee(tileMap.GetPXPosition(new Vector2(5, 3)), "stabstab", 20.0f, Melee.AttackType.STAB, 5.0f));
+            gameObjects.Add(new StatBoost(tileMap.GetPXPosition(new Vector2(7, 3)), "speedspeed",StatBoost.StatType.SPEED, 5.0f));
 
             //loading content
             tileMap.LoadContent(this);

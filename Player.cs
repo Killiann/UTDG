@@ -21,6 +21,7 @@ namespace UTDG
         }
 
         private bool canShoot = false;
+        private bool hasGun = false;
 
         private int currentShootCount = 0;
         private int fireRate = 0;
@@ -53,9 +54,9 @@ namespace UTDG
         public void PickupObject(GameObject obj)
         {
             heldItems.Add(obj);
-            if(obj.GetId() == 0) // gun
+            if(obj.GetItemType() == GameObject.ItemType.RANGED)
             {
-                canShoot = true;
+                hasGun = true;
                 shootingSpeed = ((Ranged)obj).speed;
                 bulletDamage = ((Ranged)obj).damage;
                 fireRate = ((Ranged)obj).fireRate;
@@ -81,7 +82,6 @@ namespace UTDG
                 float angle = (float)Math.Atan2(dy, dx);
                 bullets.Add(new Bullet(position, angle, 15.0f, bulletTexture));
                 canShoot = false;
-                currentShootCount = 0;
             }
         }
 
@@ -112,12 +112,13 @@ namespace UTDG
             HandleMovement();
             HandleMouse(transformationMatrix);
 
-            if (!canShoot)
+            if (!canShoot && fireRate > 0)
             {
                 currentShootCount++;
                 if(currentShootCount == fireRate)
                 {
                     canShoot = true;
+                    currentShootCount = 0;
                 }
             }
 
