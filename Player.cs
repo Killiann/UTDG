@@ -10,14 +10,20 @@ namespace UTDG
     {
         private Texture2D texture;
         private Vector2 position;
-        private readonly float walkingSpeed;
+        private readonly float walkingSpeed = 5.0f;
         private Vector2 dimensions;
-        private Matrix TransformationMatrix;
+        private Rectangle collisionBounds
+        {
+            get
+            {
+                return new Rectangle((int)position.X, (int)position.Y, (int)dimensions.X, (int)dimensions.Y);
+            }
+        }
 
-        private bool canShoot = true;
+        private bool canShoot = false;
 
         private int currentShootCount = 0;
-        private int fireRate = 6;
+        private int fireRate = 0;
         private float shootingSpeed = 0.0f;
         private float bulletDamage = 0.0f;
 
@@ -33,7 +39,6 @@ namespace UTDG
         public Player(Vector2 spawnPosition)
         {
             position = spawnPosition;
-            walkingSpeed = 5.0f;
             heldItems = new List<GameObject>();
             bullets = new List<Bullet>();
         }
@@ -50,11 +55,19 @@ namespace UTDG
             heldItems.Add(obj);
             if(obj.GetId() == 0) // gun
             {
+                canShoot = true;
                 shootingSpeed = ((Ranged)obj).speed;
                 bulletDamage = ((Ranged)obj).damage;
+                fireRate = ((Ranged)obj).fireRate;
             }
         }
         
+        public bool Collides(Rectangle collidingRect)
+        {
+            if (collisionBounds.Intersects(collidingRect)) return true;
+            else return false;
+        }
+
         private void HandleMouse(Matrix transformBy)
         {
             MouseState mouseState = Mouse.GetState();
@@ -74,6 +87,7 @@ namespace UTDG
 
         private void HandleMovement()
         {
+            //temp movement
             KeyboardState state = Keyboard.GetState();
 
             if (state.IsKeyDown(Keys.W)){
@@ -97,6 +111,7 @@ namespace UTDG
         {
             HandleMovement();
             HandleMouse(transformationMatrix);
+
             if (!canShoot)
             {
                 currentShootCount++;
@@ -106,7 +121,7 @@ namespace UTDG
                 }
             }
 
-            //clear bullets            
+            //update bullets
             for (int i = 0; i < bullets.Count; i++) { 
                 bullets[i].Update(gameTime);
                 if (bullets[i].canBeDestroyed)

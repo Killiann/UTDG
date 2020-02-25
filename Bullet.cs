@@ -1,23 +1,22 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 namespace UTDG
 {
     class Bullet
     {
+        private readonly int LIFESPAN = 300;
+        private int ticks = 0;
+        public bool canBeDestroyed = false;
+
+        private readonly Texture2D texture;
         private Vector2 position;
-        private float angle;
-        private float speed;
-        private int ticks;
-        public bool canBeDestroyed;
-        private Texture2D texture;
+        private readonly float angle;
+        private readonly float speed;                               
     
         public Bullet(Vector2 _pos, float _angle, float _speed, Texture2D _texture)
         {
-            texture = _texture;
-            ticks = 0;
-            canBeDestroyed = false;
+            texture = _texture;            
             position = _pos;
             angle = _angle;
             speed = _speed;
@@ -25,15 +24,14 @@ namespace UTDG
 
         public void Update(GameTime gameTime)
         {
+            //move in correct direction
             Vector2 direction = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
             direction.Normalize();
             position += (direction * speed);
-
+       
             ticks++;
-            if(ticks == 200)
-            {
-                canBeDestroyed = true;
-            }
+            if(ticks >= LIFESPAN)            
+                canBeDestroyed = true;            
         }
 
         public void Draw(SpriteBatch spriteBatch)

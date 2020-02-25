@@ -23,7 +23,6 @@ namespace UTDG
         {
             position = _position;
             id = _id;
-
             bounds = new Rectangle((int)position.X, (int)position.Y, 64, 64); 
         }
 

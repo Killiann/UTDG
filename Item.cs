@@ -12,15 +12,17 @@ namespace UTDG
     class Ranged : GameObject
     {
         SpriteFont font;
-        string itemName;
+        private readonly string itemName;
         public readonly float damage;
         public readonly float speed;
+        public readonly int fireRate;        
 
-        public Ranged(Vector2 _position, int _id, float _damage, float _speed) : base(_position, _id)
+        public Ranged(Vector2 _position, int _id, string _itemName, float _damage, float _speed, int _fireRate) : base(_position, _id)
         {
-            itemName = "pewpew";
+            itemName = _itemName;
             damage = _damage;
             speed = _speed;
+            fireRate = _fireRate;
         }
 
         public override void LoadContent(Game game)

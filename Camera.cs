@@ -8,9 +8,9 @@ namespace UTDG
     public class Camera
     {
         private Vector2 position;
-        private readonly float scale;
-        public int viewportWidth;
-        public int viewportHeight;
+        private readonly float scale = 0.8f;
+        private readonly int viewportWidth;
+        private readonly int viewportHeight;
 
         public Vector2 ViewPortCentre
         {
@@ -30,9 +30,20 @@ namespace UTDG
             }
         }
 
-        public Camera()
+        public Camera(Viewport viewPort)
         {
-            scale = 0.8f;
+            viewportWidth = viewPort.Width;
+            viewportHeight = viewPort.Height;
+        }
+
+        public Vector2 WorldToScreen(Vector2 coord)
+        {
+            return Vector2.Transform(coord, TranslationMatrix);
+        }
+
+        public Vector2 ScreenToWorld(Vector2 coord)
+        {
+            return Vector2.Transform(coord, Matrix.Invert(TranslationMatrix));
         }
 
         public void SetPosition(Vector2 newPosition)

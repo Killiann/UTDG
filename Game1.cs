@@ -8,14 +8,14 @@ namespace UTDG
 {
     public class Game1 : Game
     {
+        Random rnd;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private readonly TileMap tileMap;
-        private readonly Camera camera;
-        private readonly Player player;
-
-        Random rnd;
+        //objects
+        private TileMap tileMap;
+        private Camera camera;
+        private Player player;
 
         private List<GameObject> gameObjects;
 
@@ -23,42 +23,47 @@ namespace UTDG
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
-
-            tileMap = new TileMap();
-            camera = new Camera();
-            player = new Player(new Vector2(320, 320));
-
-            rnd = new Random();
-
-            gameObjects = new List<GameObject>();
-
-            gameObjects.Add(new Ranged(tileMap.GetPXPosition(new Vector2(3, 10)), 0 , 20.0f, 20.0f));                       
+            IsMouseVisible = true;         
         }
 
         protected override void Initialize()
         {
-            base.Initialize();
+            rnd = new Random();
+            camera = new Camera(GraphicsDevice.Viewport);
+            tileMap = new TileMap();
+            player = new Player(new Vector2(320, 320));
+            gameObjects = new List<GameObject>();
+
+            base.Initialize();           
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            tileMap.LoadContent(this);
-            player.LoadContent(this);
 
-            foreach(GameObject obj in gameObjects){
+            //adding objects to scene
+            gameObjects.Add(new Ranged(tileMap.GetPXPosition(new Vector2(3, 10)), gameObjects.Count, "pewpew", 20.0f, 20.0f, 6));
+
+            //loading content
+            tileMap.LoadContent(this);
+            player.LoadContent(this);           
+            foreach (GameObject obj in gameObjects){
                 obj.LoadContent(this);
             }
-
-            camera.viewportWidth = GraphicsDevice.Viewport.Width;
-            camera.viewportHeight = GraphicsDevice.Viewport.Height;
         }
 
         protected override void Update(GameTime gameTime)
         {
             camera.SetPosition(player.GetPosition());
             player.Update(gameTime, camera.TranslationMatrix);
+
+            for(int i=0;i<gameObjects.Count;i++)
+            {
+                if (player.Collides(gameObjects[i].GetBounds())){
+                    player.PickupObject(gameObjects[i]);
+                    gameObjects.Remove(gameObjects[i]);
+                }
+            }
             base.Update(gameTime);
         }
 
