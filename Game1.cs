@@ -29,8 +29,8 @@ namespace UTDG
         protected override void Initialize()
         {
             rnd = new Random();
-            camera = new Camera(GraphicsDevice.Viewport);
             tileMap = new TileMap();
+            camera = new Camera(GraphicsDevice.Viewport, tileMap);
             player = new Player(new Vector2(320, 320));
             gameObjects = new List<GameObject>();
 

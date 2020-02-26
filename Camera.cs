@@ -11,10 +11,7 @@ namespace UTDG
         private readonly float scale = 0.8f;
         private readonly int viewportWidth;
         private readonly int viewportHeight;
-
-        private bool isScreenShaking;
-        private float xOffset;
-        private float yOffset;
+        private readonly TileMap map;
 
         public Vector2 ViewPortCentre
         {
@@ -28,22 +25,17 @@ namespace UTDG
         {
             get
             {
-                return Matrix.CreateTranslation(-(int)position.X + xOffset, -(int)position.Y + yOffset, 0)
+                return Matrix.CreateTranslation(-(int)position.X, -(int)position.Y, 0)
                     * Matrix.CreateScale(scale)
                     * Matrix.CreateTranslation(new Vector3(ViewPortCentre, 0));
             }
         }
-        
-        //public void ScreenShake()
-        //{            
-        //    xOffset = 2;
-        //    yOffset = 2;
-        //}
 
-        public Camera(Viewport viewPort)
+        public Camera(Viewport viewPort, TileMap _map)
         {
             viewportWidth = viewPort.Width;
             viewportHeight = viewPort.Height;
+            map = _map;
         }
 
         public Vector2 WorldToScreen(Vector2 coord)
@@ -58,12 +50,29 @@ namespace UTDG
 
         public void SetPosition(Vector2 newPosition)
         {
-            xOffset *= -0.95f;
-            yOffset *= -0.95f;
-            if (xOffset < 0.1f && xOffset > -0.1f) xOffset = 0;
-            if (yOffset < 0.1f && yOffset > -0.1f) yOffset = 0;
+            //xpos
+            if ((newPosition.X - (viewportWidth / 2 / scale)) > 0
+                && newPosition.X + (viewportWidth / 2 / scale) < map.GetWidth())
+                position.X = newPosition.X;
+            else
+            {//reset if out of bounds
+                if ((newPosition.X - (viewportWidth / 2 / scale)) < 0)
+                    position.X = viewportWidth / 2 / scale;
+                else if (newPosition.X + (viewportWidth / 2 / scale) > map.GetWidth())
+                    position.X = map.GetWidth() - viewportWidth / 2 / scale;
+            }
 
-            position = newPosition;
+            //ypos
+            if((newPosition.Y - (viewportHeight / 2 / scale)) > 0
+                && newPosition.Y + (viewportHeight / 2 / scale) < map.GetHeight())
+                position.Y = newPosition.Y;
+            else
+            {//reset if out of bounds
+                if ((newPosition.Y - (viewportHeight / 2 / scale)) < 0)
+                    position.Y = viewportHeight / 2 / scale;
+                else if (newPosition.Y + (viewportHeight / 2 / scale) > map.GetHeight())
+                    position.Y = map.GetHeight() - viewportHeight / 2 / scale;
+            }
         }
     }
 }

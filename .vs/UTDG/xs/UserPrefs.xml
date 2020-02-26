@@ -1,18 +1,16 @@
 ﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="{E155F299-4A55-4F0D-85F3-C3A07707E8D6}|Default">
   <MonoDevelop.Ide.ItemProperties.UTDG PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="GameObject.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Game1.cs">
     <Files>
-      <File FileName="GameObject.cs" Line="51" Column="15" />
+      <File FileName="Camera.cs" Line="43" Column="54" />
+      <File FileName="Game1.cs" Line="32" Column="65" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="UTDG" expanded="True">
             <Node name="UTDG" expanded="True">
-              <Node name="Content" expanded="True">
-                <Node name="fonts" expanded="True" />
-              </Node>
-              <Node name="GameObject.cs" selected="True" />
+              <Node name="Game1.cs" selected="True" />
             </Node>
           </Node>
         </State>
