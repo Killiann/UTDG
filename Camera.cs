@@ -12,6 +12,10 @@ namespace UTDG
         private readonly int viewportWidth;
         private readonly int viewportHeight;
 
+        private bool isScreenShaking;
+        private float xOffset;
+        private float yOffset;
+
         public Vector2 ViewPortCentre
         {
             get
@@ -24,11 +28,17 @@ namespace UTDG
         {
             get
             {
-                return Matrix.CreateTranslation(-(int)position.X, -(int)position.Y, 0)
+                return Matrix.CreateTranslation(-(int)position.X + xOffset, -(int)position.Y + yOffset, 0)
                     * Matrix.CreateScale(scale)
                     * Matrix.CreateTranslation(new Vector3(ViewPortCentre, 0));
             }
         }
+        
+        //public void ScreenShake()
+        //{            
+        //    xOffset = 2;
+        //    yOffset = 2;
+        //}
 
         public Camera(Viewport viewPort)
         {
@@ -48,6 +58,11 @@ namespace UTDG
 
         public void SetPosition(Vector2 newPosition)
         {
+            xOffset *= -0.95f;
+            yOffset *= -0.95f;
+            if (xOffset < 0.1f && xOffset > -0.1f) xOffset = 0;
+            if (yOffset < 0.1f && yOffset > -0.1f) yOffset = 0;
+
             position = newPosition;
         }
     }

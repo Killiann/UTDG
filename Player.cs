@@ -10,7 +10,9 @@ namespace UTDG
     {
         private Texture2D texture;
         private Vector2 position;
-        private readonly float walkingSpeed = 5.0f;
+        private float walkingSpeed = 5.0f;
+        private float health = 100.0f;
+        private readonly float MAXHEALTH = 100.0f;
         private Vector2 dimensions;
         private Rectangle collisionBounds
         {
@@ -31,35 +33,78 @@ namespace UTDG
         private Texture2D bulletTexture;
         private List<Bullet> bullets;
 
-        List<GameObject> heldItems;
+        private enum AttackType
+        {
+            None,
+            Ranged,
+            Melee
+        }
+
+        //List<GameObject> heldItems;
+        GameObject heldItem;
 
         public Vector2 GetPosition()
         {
             return position;
         }
+        public void SetPosition(Vector2 newPos)
+        {
+            position = newPos;
+        }
+
+        public float getWalkingSpeed()
+        {
+            return walkingSpeed;
+        }
+
         public Player(Vector2 spawnPosition)
         {
             position = spawnPosition;
-            heldItems = new List<GameObject>();
+            //heldItems = new List<GameObject>();
             bullets = new List<Bullet>();
         }
 
         public void LoadContent(Game game)
         {
             texture = game.Content.Load<Texture2D>("images/player");
-            bulletTexture = game.Content.Load<Texture2D>("images/health");
+            bulletTexture = game.Content.Load<Texture2D>("images/no_image");
             dimensions = new Vector2(texture.Width, texture.Height);
         }
 
         public void PickupObject(GameObject obj)
         {
-            heldItems.Add(obj);
-            if(obj.GetItemType() == GameObject.ItemType.RANGED)
+            //heldItems.Add(obj);
+            switch (obj.GetItemType())
             {
-                hasGun = true;
-                shootingSpeed = ((Ranged)obj).speed;
-                bulletDamage = ((Ranged)obj).damage;
-                fireRate = ((Ranged)obj).fireRate;
+                case GameObject.ItemType.RANGED:
+                    //pickup and wield
+                    hasGun = true;
+                    shootingSpeed = ((Ranged)obj).speed;
+                    bulletDamage = ((Ranged)obj).damage;
+                    fireRate = ((Ranged)obj).fireRate;
+
+                    heldItem = obj;
+                    break;
+                case GameObject.ItemType.MELEE:
+                    //pickup and wield 
+
+                    heldItem = obj;
+                    break;
+                case GameObject.ItemType.STAT_BOOST:
+                    //add effect to player
+                    switch (((StatBoost)obj).statType) {
+                        case StatBoost.StatType.HEALTH:
+                            if(health < 100)
+                            {
+                                health += ((StatBoost)obj).statChange;
+                                if (health > MAXHEALTH) health = MAXHEALTH;
+                            }
+                            break;
+                        case StatBoost.StatType.SPEED:
+                            walkingSpeed += ((StatBoost)obj).statChange;
+                            break;
+                    }
+                    break;
             }
         }
         
@@ -69,49 +114,41 @@ namespace UTDG
             else return false;
         }
 
-        private void HandleMouse(Matrix transformBy)
+        public void Attack(Vector2 target)
         {
-            MouseState mouseState = Mouse.GetState();
-            if(mouseState.LeftButton == ButtonState.Pressed && canShoot)
+            if(canShoot)
             {
-                Matrix invertedMatrix = Matrix.Invert(transformBy);
-                Vector2 mousePosition = new Vector2(mouseState.X, mouseState.Y);
-                mousePosition = Vector2.Transform(mousePosition, invertedMatrix);
-                double dy = (mousePosition.Y - position.Y);
-                double dx = (mousePosition.X - position.X);
+                double dy = (target.Y - position.Y);
+                double dx = (target.X - position.X);
                 float angle = (float)Math.Atan2(dy, dx);
                 bullets.Add(new Bullet(position, angle, 15.0f, bulletTexture));
                 canShoot = false;
             }
         }
 
-        private void HandleMovement()
+        public void MovePlayer(char key)
         {
-            //temp movement
-            KeyboardState state = Keyboard.GetState();
+            //temp movement            
 
-            if (state.IsKeyDown(Keys.W)){
-                position.Y -= walkingSpeed;
-            }
-            if (state.IsKeyDown(Keys.A))
+            switch (key)
             {
-                position.X -= walkingSpeed;
-            }
-            if (state.IsKeyDown(Keys.S))
-            {
-                position.Y += walkingSpeed;
-            }
-            if (state.IsKeyDown(Keys.D))
-            {
-                position.X += walkingSpeed;
+                case 'W':
+                    position.Y -= walkingSpeed;
+                    break;
+                case 'A':
+                    position.X -= walkingSpeed;
+                    break;
+                case 'S':
+                    position.Y += walkingSpeed;
+                    break;
+                case 'D':
+                    position.X += walkingSpeed;
+                    break;
             }
         }
 
-        public void Update(GameTime gameTime, Matrix transformationMatrix)
+        public void Update(GameTime gameTime)
         {
-            HandleMovement();
-            HandleMouse(transformationMatrix);
-
             if (!canShoot && fireRate > 0)
             {
                 currentShootCount++;

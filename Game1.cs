@@ -44,7 +44,8 @@ namespace UTDG
             //adding objects to scene
             gameObjects.Add(new Ranged(tileMap.GetPXPosition(new Vector2(3, 3)), "pewpew", 20.0f, 20.0f, 6));
             gameObjects.Add(new Melee(tileMap.GetPXPosition(new Vector2(5, 3)), "stabstab", 20.0f, Melee.AttackType.STAB, 5.0f));
-            gameObjects.Add(new StatBoost(tileMap.GetPXPosition(new Vector2(7, 3)), "speedspeed",StatBoost.StatType.SPEED, 5.0f));
+            gameObjects.Add(new StatBoost(tileMap.GetPXPosition(new Vector2(7, 3)), "speed",StatBoost.StatType.SPEED, 2.0f));
+            gameObjects.Add(new StatBoost(tileMap.GetPXPosition(new Vector2(9, 3)), "health", StatBoost.StatType.HEALTH, 20.0f));
 
             //loading content
             tileMap.LoadContent(this);
@@ -54,12 +55,52 @@ namespace UTDG
             }
         }
 
+        public void HandleInput()
+        {
+            MouseState mouseState = Mouse.GetState();
+
+            if (mouseState.LeftButton == ButtonState.Pressed)
+            {
+                Vector2 targetPosition = Vector2.Transform(new Vector2(mouseState.X, mouseState.Y), Matrix.Invert(camera.TranslationMatrix));
+                player.Attack(targetPosition);
+            }
+
+            KeyboardState keyboard = Keyboard.GetState();
+            if (keyboard.IsKeyDown(Keys.W))
+            {
+                if (player.GetPosition().Y - player.getWalkingSpeed() > 0)
+                    player.MovePlayer('W');
+                else player.SetPosition(new Vector2(player.GetPosition().X, 0));
+            }
+            if (keyboard.IsKeyDown(Keys.A))
+            {
+                if (player.GetPosition().X - player.getWalkingSpeed() > 0)
+                    player.MovePlayer('A');
+                else player.SetPosition(new Vector2(0, player.GetPosition().Y));
+            }                
+            if (keyboard.IsKeyDown(Keys.S))
+            {
+                int MaxMoveH = tileMap.GetHeight() - 128;
+                if (player.GetPosition().Y + player.getWalkingSpeed() < MaxMoveH)
+                    player.MovePlayer('S');
+                else player.SetPosition(new Vector2(player.GetPosition().X, MaxMoveH));
+            }
+            if (keyboard.IsKeyDown(Keys.D))
+            {
+                int MaxMoveW = tileMap.GetWidth() - 64;
+                if (player.GetPosition().X + player.getWalkingSpeed() < MaxMoveW)
+                    player.MovePlayer('D');
+                else player.SetPosition(new Vector2(MaxMoveW, player.GetPosition().Y));
+            }
+        }
+
         protected override void Update(GameTime gameTime)
         {
+            HandleInput();            
+            player.Update(gameTime);
             camera.SetPosition(player.GetPosition());
-            player.Update(gameTime, camera.TranslationMatrix);
 
-            for(int i=0;i<gameObjects.Count;i++)
+            for (int i=0;i<gameObjects.Count;i++)
             {
                 if (player.Collides(gameObjects[i].GetBounds())){
                     player.PickupObject(gameObjects[i]);

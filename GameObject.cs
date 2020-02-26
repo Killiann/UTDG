@@ -115,7 +115,10 @@ namespace UTDG
         public override void LoadContent(Game game)
         {
             base.LoadContent(game);
-            texture = game.Content.Load<Texture2D>("images/health");
+            if (statType == StatType.SPEED)
+                texture = game.Content.Load<Texture2D>("images/speed");
+            if (statType == StatType.HEALTH)
+                texture = game.Content.Load<Texture2D>("images/health");
         }
     }
 }
