@@ -7,118 +7,107 @@ using Microsoft.Xna.Framework.Input;
 
 namespace UTDG
 {
-    public class GameObject
+    public class GameObj
     {
-        //SpriteFont font;
-        private readonly string itemName;
-        protected Texture2D texture;
         protected Vector2 position;
-        protected Rectangle bounds;
+        protected Vector2 dimensions;
+        protected Texture2D texture;
+
+        public virtual void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, (int)dimensions.X, (int)dimensions.Y), Color.White);
+        }
+
+        public Vector2 GetPosition() { return position; }
+        public Vector2 GetDimensions() { return dimensions; }
+        public void SetXPosition(float newXPosition) { position.X = newXPosition; }
+        public void SetYPosition(float newYPosition) { position.Y = newYPosition; }
+    }
+
+    public class Item : GameObj
+    {
+        public CollisionManager collisionManager;
         protected ItemType itemType;
 
         public enum ItemType
         {
-            RANGED,
-            MELEE,
-            STAT_BOOST
+            Ranged,
+            Melee,
+            StatEffect
         }
 
-        public ItemType GetItemType()
+        public Item(Vector2 spawnPosition, Texture2D texture)
         {
-            return itemType;
-        }            
-           
-        public GameObject(Vector2 _position, string _itemName)
-        {
-            position = _position;
-            itemName = _itemName;
-            bounds = new Rectangle((int)position.X, (int)position.Y, 64, 64); 
+            position = spawnPosition;
+            dimensions = new Vector2(64, 64); //temp (tilesize)
+            this.texture = texture;
+            collisionManager = new ItemCollisionManager(new Rectangle((int)position.X, (int)position.Y, (int)dimensions.X, (int)dimensions.Y));
         }
 
-        public virtual void LoadContent(Game game)
-        {
-            //font = game.Content.Load<SpriteFont>("fonts/TestFont");
-        }
-
-        public Rectangle GetBounds()
-        {
-            return bounds;
-        }
-
-        public virtual void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(texture, bounds, Color.White);
-            //spriteBatch.DrawString(font, itemName, new Vector2(position.X, position.Y + texture.Height), Color.Black);
-        }
+        public ItemType GetItemType() { return itemType; }
     }
 
-    class Ranged : GameObject
+    public class Pickup_Ranged : Item
     {
-        public readonly float damage;
-        public readonly float speed;
-        public readonly int fireRate;
+        private readonly float damage;
+        private readonly float speed;
+        private readonly int fireRate;
 
-        public Ranged(Vector2 _position, string _itemName, float _damage, float _speed, int _fireRate) : base(_position, _itemName)
+        public Pickup_Ranged(Vector2 position, Texture2D texture, float _damage, float _speed, int _fireRate) : base(position, texture)
         {
-            itemType = ItemType.RANGED;
+            itemType = ItemType.Ranged;
             damage = _damage;
             speed = _speed;
             fireRate = _fireRate;
         }
-        public override void LoadContent(Game game)
-        {
-            base.LoadContent(game);
-            texture = game.Content.Load<Texture2D>("images/gun");
-        }
+
+        public float GetDamage() { return damage; }
+        public float GetSpeed() { return speed; }
+        public float GetFireRate() { return fireRate; }
     }
 
-    class Melee : GameObject
+    public class Pickup_Melee : Item
     {
-        public readonly float damage;
-        public readonly AttackType attackType;
-        public readonly float attackSpeed;
+        private readonly float damage;
+        private readonly float attackSpeed;
+        private readonly AttackType attackType;
+        
         public enum AttackType
         {
             SWING,
             STAB
         }
-        public Melee(Vector2 _position, string _itemName, float _damage, AttackType _attackType, float _attackSpeed) : base(_position, _itemName)
+
+        public Pickup_Melee(Vector2 position, Texture2D texture, float damage, float attackSpeed, AttackType attackType) : base(position, texture)
         {
-            itemType = ItemType.MELEE;
-            damage = _damage;
-            attackType = _attackType;
-            attackSpeed = _attackSpeed;
+            itemType = ItemType.Melee;
+            this.damage = damage;
+            this.attackSpeed = attackSpeed;
+            this.attackType = attackType;
         }
-        public override void LoadContent(Game game)
-        {
-            base.LoadContent(game);
-            texture = game.Content.Load<Texture2D>("images/sword");
-        }
+
+        public float GetDamage() { return damage; }
+        public float GetSpeed() { return attackSpeed; }
+        public AttackType GetAttackType() { return attackType; }
     }
 
-    class StatBoost : GameObject
+    public class StatBoost : Item
     {
-
-        public readonly StatType statType;
-        public readonly float statChange;
+        private readonly float statChange;
+        private readonly StatType statType;
+        public float GetStatChange() { return statChange; }
+        public StatType GetStatType() { return statType; }
         public enum StatType
         {
             SPEED,
             HEALTH
         }
-        public StatBoost(Vector2 _position, string _itemName, StatType _statType, float _statChange) : base(_position, _itemName)
+
+        public StatBoost(Vector2 position,Texture2D texture, float statChange, StatType statType) : base(position, texture)
         {
-            itemType = ItemType.STAT_BOOST;
-            statType = _statType;
-            statChange = _statChange;
-        }
-        public override void LoadContent(Game game)
-        {
-            base.LoadContent(game);
-            if (statType == StatType.SPEED)
-                texture = game.Content.Load<Texture2D>("images/speed");
-            if (statType == StatType.HEALTH)
-                texture = game.Content.Load<Texture2D>("images/health");
+            itemType = ItemType.StatEffect;
+            this.statType = statType;
+            this.statChange = statChange;
         }
     }
 }

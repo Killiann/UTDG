@@ -55,7 +55,7 @@ namespace UTDG
                 && newPosition.X + (viewportWidth / 2 / scale) < map.GetWidth())
                 position.X = newPosition.X;
             else
-            {//reset if out of bounds
+            {
                 if ((newPosition.X - (viewportWidth / 2 / scale)) < 0)
                     position.X = viewportWidth / 2 / scale;
                 else if (newPosition.X + (viewportWidth / 2 / scale) > map.GetWidth())
@@ -67,7 +67,7 @@ namespace UTDG
                 && newPosition.Y + (viewportHeight / 2 / scale) < map.GetHeight())
                 position.Y = newPosition.Y;
             else
-            {//reset if out of bounds
+            {
                 if ((newPosition.Y - (viewportHeight / 2 / scale)) < 0)
                     position.Y = viewportHeight / 2 / scale;
                 else if (newPosition.Y + (viewportHeight / 2 / scale) > map.GetHeight())
