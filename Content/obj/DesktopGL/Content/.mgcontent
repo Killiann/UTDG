@@ -4,17 +4,15 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/k.comerford/source/repos/UTDG/Content/fonts/TestFont.spritefont</File>
-    <File>C:/Users/k.comerford/source/repos/UTDG/Content/images/gun.png</File>
-    <File>C:/Users/k.comerford/source/repos/UTDG/Content/images/health.png</File>
-    <File>C:/Users/k.comerford/source/repos/UTDG/Content/images/no_image.png</File>
-    <File>C:/Users/k.comerford/source/repos/UTDG/Content/images/player.png</File>
-    <File>C:/Users/k.comerford/source/repos/UTDG/Content/images/speed.png</File>
-    <File>C:/Users/k.comerford/source/repos/UTDG/Content/images/Sword.png</File>
-    <File>C:/Users/k.comerford/source/repos/UTDG/Content/images/tileMap.png</File>
+    <File>/Users/killian/Documents/Monogame/UTDG/Content/images/gun.png</File>
+    <File>/Users/killian/Documents/Monogame/UTDG/Content/images/health.png</File>
+    <File>/Users/killian/Documents/Monogame/UTDG/Content/images/no_image.png</File>
+    <File>/Users/killian/Documents/Monogame/UTDG/Content/images/player.png</File>
+    <File>/Users/killian/Documents/Monogame/UTDG/Content/images/speed.png</File>
+    <File>/Users/killian/Documents/Monogame/UTDG/Content/images/Sword.png</File>
+    <File>/Users/killian/Documents/Monogame/UTDG/Content/images/tileMap.png</File>
   </SourceFiles>
   <DestFiles>
-    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

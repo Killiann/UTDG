@@ -9,7 +9,7 @@ namespace UTDG
 {
     public class GameObject
     {
-        SpriteFont font;
+        //SpriteFont font;
         private readonly string itemName;
         protected Texture2D texture;
         protected Vector2 position;
@@ -37,7 +37,7 @@ namespace UTDG
 
         public virtual void LoadContent(Game game)
         {
-            font = game.Content.Load<SpriteFont>("fonts/TestFont");
+            //font = game.Content.Load<SpriteFont>("fonts/TestFont");
         }
 
         public Rectangle GetBounds()
@@ -48,7 +48,7 @@ namespace UTDG
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, bounds, Color.White);
-            spriteBatch.DrawString(font, itemName, new Vector2(position.X, position.Y + texture.Height), Color.Black);
+            //spriteBatch.DrawString(font, itemName, new Vector2(position.X, position.Y + texture.Height), Color.Black);
         }
     }
 
