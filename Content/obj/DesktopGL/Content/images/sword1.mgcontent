@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/k.comerford/source/repos/UTDG/Content/images/gun.png</SourceFile>
-  <SourceTime>2020-02-24T11:38:11.8005522+01:00</SourceTime>
-  <DestFile>C:/Users/k.comerford/source/repos/UTDG/Content/bin/DesktopGL/Content/images/gun.xnb</DestFile>
-  <DestTime>2020-02-27T08:18:09.2233525+01:00</DestTime>
+  <SourceFile>C:/Users/k.comerford/source/repos/UTDG/Content/images/sword1.png</SourceFile>
+  <SourceTime>2020-02-27T09:42:33.3447979+01:00</SourceTime>
+  <DestFile>C:/Users/k.comerford/source/repos/UTDG/Content/bin/DesktopGL/Content/images/sword1.xnb</DestFile>
+  <DestTime>2020-02-27T09:45:46.3927517+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2018-08-05T14:17:44+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

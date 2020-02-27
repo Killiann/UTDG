@@ -31,8 +31,8 @@ namespace UTDG
             return bounds.Intersects(r2);
         }
 
-        public virtual void Update(GameObj gameObject) {
-            bounds = new Rectangle((int)gameObject.GetPosition().X, (int)gameObject.GetPosition().Y, (int)gameObject.GetDimensions().X, (int)gameObject.GetDimensions().Y);
+        public virtual void Update(Rectangle bounds) {
+            this.bounds = bounds;
         }
     }
 

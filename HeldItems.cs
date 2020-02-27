@@ -39,16 +39,19 @@ namespace UTDG
             else return null;
         }
 
+        public Equiped GetEquipedType() { return equiped; }
+
         public void PickupItem(Item item)
         {
             if(item.GetType() == typeof(Pickup_Ranged))
             {
                 rangedItem = (Pickup_Ranged)item;
-                
+                equiped = Equiped.Ranged;
             }
             else if(item.GetType() == typeof(Pickup_Melee))
             {
                 meleeItem = (Pickup_Melee)item;
+                equiped = Equiped.Melee;
             }
         }
     }

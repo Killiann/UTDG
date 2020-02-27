@@ -22,7 +22,7 @@ namespace UTDG
             speed = _speed;
         }
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             //move in correct direction
             Vector2 direction = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));

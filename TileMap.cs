@@ -18,8 +18,7 @@ namespace UTDG
 
         public int GetWidth() { return map.GetLength(0) * tileSize; }
         public int GetHeight() { return map.GetLength(1) * tileSize; }
-        public Vector2 GetPXPosition(Vector2 position) { return new Vector2(position.X * tileSize, position.Y * tileSize); }
-
+        public Vector2 GetPXPosition(Vector2 position) { return new Vector2(position.X * tileSize, position.Y * tileSize); }        
         public void Draw(SpriteBatch spriteBatch)
         {
             for (int x = 0; x < map.GetLength(0); x++)

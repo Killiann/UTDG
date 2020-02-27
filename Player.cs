@@ -12,11 +12,14 @@ namespace UTDG
         public CollisionManager collisionManager;
         private PlayerInputManager inputManager;
         private PhysicsManager physicsManager;
-        private HeldItemManager heldItemManager;
+        public HeldItemManager heldItemManager;
+        public RangedHandler rangedHandler;
+        public MeleeHandler meleeHandler;
 
         private float speedBoost = 0.0f;
 
-        private TileMap map;
+        public TileMap map;
+        public Camera camera;
         private float xVelocity;
         private float yVelocity;
 
@@ -40,13 +43,23 @@ namespace UTDG
             inputManager = new PlayerInputManager();
             physicsManager = new PhysicsManager(collisionManager);
             heldItemManager = new HeldItemManager();
+            rangedHandler = new RangedHandler();
+            meleeHandler = new MeleeHandler();
         }
 
         public void PickupItem(Item item)
         {
-            if(item.GetType() == typeof(Pickup_Melee) || item.GetType() == typeof(Pickup_Ranged))
+            if (item.GetType() == typeof(Pickup_Melee))
+            {
                 heldItemManager.PickupItem(item);
-            else if(item.GetType() == typeof(StatBoost))
+                meleeHandler.ChangeWeapon(item);
+            }            
+            else if (item.GetType() == typeof(Pickup_Ranged))
+            {
+                heldItemManager.PickupItem(item);
+                rangedHandler.ChangeWeapon(item);
+            }
+            else if (item.GetType() == typeof(StatBoost))
             {
                 StatBoost.StatType type = ((StatBoost)item).GetStatType();
                 if (type == StatBoost.StatType.SPEED)
@@ -54,14 +67,25 @@ namespace UTDG
             }
         }
 
-        public void Update()
+        public void Update(Camera camera)
         {
-            collisionManager.Update(this);
+            this.camera = camera;
+
+            collisionManager.Update(new Rectangle((int)position.X, (int)position.Y, (int)dimensions.X, (int)dimensions.Y));
             inputManager.Update(this);
             physicsManager.Update(this);
+            rangedHandler.Update(this);
+            meleeHandler.Update(this);
 
             position.X += xVelocity;
             position.Y += yVelocity;
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+            rangedHandler.Draw(spriteBatch);
+            meleeHandler.Draw(spriteBatch);
         }
     }
 }

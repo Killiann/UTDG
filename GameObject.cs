@@ -53,17 +53,24 @@ namespace UTDG
         private readonly float speed;
         private readonly int fireRate;
 
-        public Pickup_Ranged(Vector2 position, Texture2D texture, float _damage, float _speed, int _fireRate) : base(position, texture)
+        private Texture2D bulletTexture;
+        //private Texture2D gunTexture;
+
+        public Pickup_Ranged(Vector2 position, Texture2D texture, Texture2D bulletTexture, float damage, float speed, int fireRate) : base(position, texture)
         {
             itemType = ItemType.Ranged;
-            damage = _damage;
-            speed = _speed;
-            fireRate = _fireRate;
+
+            this.bulletTexture = bulletTexture;
+            this.damage = damage;
+            this.speed = speed;
+            this.fireRate = fireRate;
         }
 
         public float GetDamage() { return damage; }
         public float GetSpeed() { return speed; }
-        public float GetFireRate() { return fireRate; }
+        public int GetFireRate() { return fireRate; }
+        public Texture2D getGunTexture() { return texture; }
+        public Texture2D getBulletTexture() { return bulletTexture; }
     }
 
     public class Pickup_Melee : Item
@@ -71,6 +78,7 @@ namespace UTDG
         private readonly float damage;
         private readonly float attackSpeed;
         private readonly AttackType attackType;
+        private Texture2D weaponTexture;
         
         public enum AttackType
         {
@@ -78,10 +86,11 @@ namespace UTDG
             STAB
         }
 
-        public Pickup_Melee(Vector2 position, Texture2D texture, float damage, float attackSpeed, AttackType attackType) : base(position, texture)
+        public Pickup_Melee(Vector2 position, Texture2D texture, Texture2D weaponTexture, float damage, float attackSpeed, AttackType attackType) : base(position, texture)
         {
             itemType = ItemType.Melee;
             this.damage = damage;
+            this.weaponTexture = weaponTexture;
             this.attackSpeed = attackSpeed;
             this.attackType = attackType;
         }
@@ -89,6 +98,7 @@ namespace UTDG
         public float GetDamage() { return damage; }
         public float GetSpeed() { return attackSpeed; }
         public AttackType GetAttackType() { return attackType; }
+        public Texture2D GetWeaponTexture() { return weaponTexture; }
     }
 
     public class StatBoost : Item

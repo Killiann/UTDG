@@ -8,7 +8,7 @@ namespace UTDG
     public class PlayerInputManager
     {
         private float baseAcceleration = 1.0f;
-        private float acceleration;
+        private float acceleration;        
 
         public void Update(Player player)
         {
@@ -44,6 +44,17 @@ namespace UTDG
 
             //handle mouse
             MouseState mouse = Mouse.GetState();
+            if(mouse.LeftButton == ButtonState.Pressed)
+            {
+                if (player.heldItemManager.GetEquipedType() == HeldItemManager.Equiped.Ranged)
+                {
+                    player.rangedHandler.Attack(player.camera.ScreenToWorld(new Vector2(mouse.X, mouse.Y)));
+                }
+                else if (player.heldItemManager.GetEquipedType() == HeldItemManager.Equiped.Melee)
+                {
+                    player.meleeHandler.Attack(player.camera.ScreenToWorld(new Vector2(mouse.X, mouse.Y)));
+                }
+            }
         }
     }
 }

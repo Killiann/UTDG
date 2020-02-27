@@ -36,8 +36,8 @@ namespace UTDG
             player = new Player(new Vector2(320, 320), textureHandler.playerTexture, tileMap);
 
             gameObjects = new List<GameObj>();
-            gameObjects.Add(new Pickup_Ranged(tileMap.GetPXPosition(new Vector2(3, 3)), textureHandler.gunTexture, 20.0f, 20.0f, 6));
-            gameObjects.Add(new Pickup_Melee(tileMap.GetPXPosition(new Vector2(5, 3)), textureHandler.swordTexture, 20.0f, 20.0f, Pickup_Melee.AttackType.STAB));
+            gameObjects.Add(new Pickup_Ranged(tileMap.GetPXPosition(new Vector2(3, 3)), textureHandler.gunTexture, textureHandler.bulletTexture, 20.0f, 20.0f, 6));
+            gameObjects.Add(new Pickup_Melee(tileMap.GetPXPosition(new Vector2(5, 3)), textureHandler.healthTexture, textureHandler.swordTexture,20.0f, 2f, Pickup_Melee.AttackType.STAB));
             gameObjects.Add(new StatBoost(tileMap.GetPXPosition(new Vector2(7, 3)), textureHandler.speedTexture, 1.5f, StatBoost.StatType.SPEED));
         }
 
@@ -49,7 +49,7 @@ namespace UTDG
 
         protected override void Update(GameTime gameTime)
         {
-            player.Update();
+            player.Update(camera);
             camera.SetPosition(new Vector2(player.GetPosition().X + 32, player.GetPosition().Y + 64));
 
             for (int i = 0; i < gameObjects.Count; i++)

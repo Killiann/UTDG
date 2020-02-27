@@ -25,7 +25,7 @@ namespace UTDG
             gunTexture = game.Content.Load<Texture2D>("images/gun");
             healthTexture = game.Content.Load<Texture2D>("images/health");
             no_imageTexture = game.Content.Load<Texture2D>("images/no_image");
-            swordTexture = game.Content.Load<Texture2D>("images/sword");
+            swordTexture = game.Content.Load<Texture2D>("images/sword1");
             speedTexture = game.Content.Load<Texture2D>("images/speed");
         }
     }
