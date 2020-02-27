@@ -5,12 +5,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 namespace UTDG
 {
-    public class PlayerInputManager
+    public class PlayerInputHandler
     {
         private float baseAcceleration = 1.0f;
         private float acceleration;
         private MouseState lastMouseState;
-        public PlayerInputManager()
+        public PlayerInputHandler()
         {
             lastMouseState = Mouse.GetState();
         }
@@ -50,13 +50,13 @@ namespace UTDG
             MouseState mouse = Mouse.GetState();
             if(mouse.LeftButton == ButtonState.Pressed)
             {
-                if (player.heldItemManager.GetEquipedType() == HeldItemManager.Equiped.Ranged)
+                if (player.heldItemManager.GetEquipedType() == HeldItemHandler.Equiped.Ranged)
                 {
                     player.rangedHandler.Attack(player.camera.ScreenToWorld(new Vector2(mouse.X, mouse.Y)));
                 }
                 if (lastMouseState.LeftButton == ButtonState.Released)
                 {
-                    if (player.heldItemManager.GetEquipedType() == HeldItemManager.Equiped.Melee)
+                    if (player.heldItemManager.GetEquipedType() == HeldItemHandler.Equiped.Melee)
                     {
                         player.meleeHandler.Attack(player.camera.ScreenToWorld(new Vector2(mouse.X, mouse.Y)));
                     }

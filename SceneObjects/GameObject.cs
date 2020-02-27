@@ -26,7 +26,7 @@ namespace UTDG
 
     public class Item : GameObj
     {
-        public CollisionManager collisionManager;
+        public CollisionHandler collisionManager;
         protected ItemType itemType;
 
         public enum ItemType
@@ -41,7 +41,7 @@ namespace UTDG
             position = spawnPosition;
             dimensions = new Vector2(64, 64); //temp (tilesize)
             this.texture = texture;
-            collisionManager = new ItemCollisionManager(new Rectangle((int)position.X, (int)position.Y, (int)dimensions.X, (int)dimensions.Y));
+            collisionManager = new ItemCollisionHandler(new Rectangle((int)position.X, (int)position.Y, (int)dimensions.X, (int)dimensions.Y));
         }
 
         public ItemType GetItemType() { return itemType; }

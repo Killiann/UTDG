@@ -12,13 +12,13 @@ namespace UTDG
         protected Vector2 position;
         protected float angle;
         protected Texture2D weaponTexture;
-        public CollisionManager collisionManager;
+        public CollisionHandler collisionManager;
 
         protected bool IsActive() { return isActive; }
 
         public WeaponHandler()
         {
-            collisionManager = new CollisionManager();
+            collisionManager = new CollisionHandler();
             isActive = false;
         }
 

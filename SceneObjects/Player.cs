@@ -9,10 +9,10 @@ namespace UTDG
     {        
         private float speed;
 
-        public CollisionManager collisionManager;
-        private PlayerInputManager inputManager;
-        private PhysicsManager physicsManager;
-        public HeldItemManager heldItemManager;
+        public CollisionHandler collisionManager;
+        private PlayerInputHandler inputManager;
+        private PhysicsHandler physicsManager;
+        public HeldItemHandler heldItemManager;
         public RangedHandler rangedHandler;
         public MeleeHandler meleeHandler;
 
@@ -42,10 +42,10 @@ namespace UTDG
             this.map = map;
 
             dimensions = new Vector2(texture.Width, texture.Height);
-            collisionManager = new PlayerCollisionManager(this.map);
-            inputManager = new PlayerInputManager();
-            physicsManager = new PhysicsManager(collisionManager);
-            heldItemManager = new HeldItemManager();
+            collisionManager = new PlayerCollisionHandler(this.map);
+            inputManager = new PlayerInputHandler();
+            physicsManager = new PhysicsHandler(collisionManager);
+            heldItemManager = new HeldItemHandler();
             rangedHandler = new RangedHandler();
             meleeHandler = new MeleeHandler();
         }

@@ -1,14 +1,14 @@
 ﻿using System;
 namespace UTDG
 {
-    public class PhysicsManager
+    public class PhysicsHandler
     {
-        private CollisionManager collisionManager;
+        private CollisionHandler collisionManager;
         private float maxBaseVelocity = 5.0f;
         private float maxVelocity;
         private readonly float walkfriction = 0.85f;
 
-        public PhysicsManager(CollisionManager collisionManager)
+        public PhysicsHandler(CollisionHandler collisionManager)
         {
             this.collisionManager = collisionManager;
         }

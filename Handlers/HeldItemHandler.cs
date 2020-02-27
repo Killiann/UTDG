@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 namespace UTDG
 {
-    public class HeldItemManager
+    public class HeldItemHandler
     {
         private Pickup_Melee meleeItem;
         private Pickup_Ranged rangedItem;
@@ -20,7 +20,7 @@ namespace UTDG
             Ranged
         }
 
-        public HeldItemManager()
+        public HeldItemHandler()
         {
             equiped = Equiped.None;
         }

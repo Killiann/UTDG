@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace UTDG
 {
-    public class CollisionManager
+    public class CollisionHandler
     {
         protected TileMap map;
         protected Rectangle bounds;
@@ -36,17 +36,17 @@ namespace UTDG
         }
     }
 
-    public class ItemCollisionManager: CollisionManager
+    public class ItemCollisionHandler: CollisionHandler
     {
-        public ItemCollisionManager(Rectangle bounds)
+        public ItemCollisionHandler(Rectangle bounds)
         {
             this.bounds = bounds;
         }
     }
 
-    public class PlayerCollisionManager : CollisionManager
+    public class PlayerCollisionHandler : CollisionHandler
     {
-        public PlayerCollisionManager(TileMap map)
+        public PlayerCollisionHandler(TileMap map)
         {
             this.map = map;
         }
