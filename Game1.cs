@@ -12,6 +12,7 @@ namespace UTDG
         private SpriteBatch _spriteBatch;
         private SpriteBatch _overlaySpriteBatch;
 
+        private SceneObjectHandler sceneObjectHandler;
         private readonly TextureHandler textureHandler;
         private GameOverlay gameOverlay;
 
@@ -19,14 +20,14 @@ namespace UTDG
         private TileMap tileMap;
         private Player player;
         private Camera camera;
-        private List<GameObj> gameObjects;
+        //private List<GameObj> gameObjects;
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-
+            
             textureHandler = new TextureHandler();
         }
 
@@ -40,17 +41,16 @@ namespace UTDG
             camera = new Camera(GraphicsDevice.Viewport, tileMap);
             player = new Player(tileMap.GetPXPosition(new Vector2(10, 10)), textureHandler.playerTexture, tileMap);
 
-            gameObjects = new List<GameObj>();
-            gameObjects.Add(new Pickup_Ranged(tileMap.GetPXPosition(new Vector2(3, 3)), textureHandler.gunTexture, textureHandler.bulletTexture, 20.0f, 20.0f, 6));
-            gameObjects.Add(new Pickup_Melee(tileMap.GetPXPosition(new Vector2(5, 3)), textureHandler.healthTexture, textureHandler.swordTexture,20.0f, 15f, Pickup_Melee.AttackType.SWING));
-            gameObjects.Add(new StatBoost(tileMap.GetPXPosition(new Vector2(7, 3)), textureHandler.speedTexture, 1.5f, StatBoost.StatType.SPEED));
+            sceneObjectHandler = new SceneObjectHandler(tileMap);
+            sceneObjectHandler.AddObject(new Pickup_Ranged(tileMap.GetPXPosition(new Vector2(3, 3)), textureHandler.gunTexture, textureHandler.bulletTexture, 20.0f, 20.0f, 6));
+            sceneObjectHandler.AddObject(new Pickup_Melee(tileMap.GetPXPosition(new Vector2(5, 3)), textureHandler.healthTexture, textureHandler.swordTexture, 20.0f, 15f, Pickup_Melee.AttackType.STAB));                       
+            sceneObjectHandler.AddObject(new StatBoost(tileMap.GetPXPosition(new Vector2(7, 3)), textureHandler.speedTexture, 1.5f, StatBoost.StatType.SPEED));            
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _overlaySpriteBatch = new SpriteBatch(GraphicsDevice);
-
             textureHandler.LoadContent(this);
         }
 
@@ -63,21 +63,19 @@ namespace UTDG
             if (player.heldItemManager.GetEquipedType() == HeldItemHandler.Equiped.Melee) gameOverlay.meleeItem.Select();
             else if (player.heldItemManager.GetEquipedType() == HeldItemHandler.Equiped.Ranged) gameOverlay.rangedItem.Select();
 
-            for (int i = 0; i < gameObjects.Count; i++)
+
+            for(int i = 0; i < sceneObjectHandler.GetSceneObjects().Count; i++)
             {
-                if (((Item)gameObjects[i]).collisionManager.IsColliding(player.collisionManager.GetBounds()))
-                {
-                    player.PickupItem((Item)gameObjects[i]);
+                GameObj obj = sceneObjectHandler.GetSceneObjects()[i];
 
-                    //swap weapon display UI
-                    if (gameObjects[i].GetType() == typeof(Pickup_Melee))                    
-                        gameOverlay.meleeItem.ChangeWeaponTexture(((Item)gameObjects[i]).GetTexture());                    
-                    else if (gameObjects[i].GetType() == typeof(Pickup_Ranged))
-                        gameOverlay.rangedItem.ChangeWeaponTexture(((Item)gameObjects[i]).GetTexture());
-
-                    gameObjects.Remove(gameObjects[i]);
+                //picking up items (temp)
+                if (player.collisionManager.IsColliding(((Item)obj).collisionManager.GetBounds())){
+                    player.PickupItem((Item)obj);
+                    if (obj.GetType() == typeof(Pickup_Melee)) gameOverlay.meleeItem.ChangeWeaponTexture(((Item)obj).GetTexture());
+                    else if (obj.GetType() == typeof(Pickup_Ranged)) gameOverlay.rangedItem.ChangeWeaponTexture(((Item)obj).GetTexture());
+                    sceneObjectHandler.RemoveObject(obj);
                 }
-            }
+            }            
 
             base.Update(gameTime);
         }
@@ -89,12 +87,11 @@ namespace UTDG
             //world
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
             null, null, null, null, camera.TranslationMatrix);
+
             tileMap.Draw(_spriteBatch);
-            foreach (GameObj obj in gameObjects)
-            {
-                obj.Draw(_spriteBatch);
-            }
+            sceneObjectHandler.Draw(_spriteBatch);
             player.Draw(_spriteBatch);
+
             _spriteBatch.End();
 
             //UI

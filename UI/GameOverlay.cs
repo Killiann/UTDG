@@ -20,9 +20,9 @@ namespace UTDG
 
         public void Initialize()
         {
-            healthBar = new ProgressBar(new Vector2(5, 5), textureHandler.progressGreen, 1.0f, textureHandler.progressBG, 3, 3);
-            meleeItem = new ItemDisplay(new Vector2(5, 45), textureHandler.no_imageTexture, textureHandler.itemDisplayBg, textureHandler.itemDisplaySelected);
-            rangedItem = new ItemDisplay(new Vector2(74, 45), textureHandler.no_imageTexture, textureHandler.itemDisplayBg, textureHandler.itemDisplaySelected);
+            healthBar = new ProgressBar(new Vector2(5, 5), textureHandler.progressGreen, 1.0f, textureHandler.progressBG, 2, 2);
+            meleeItem = new ItemDisplay(new Vector2(5, 34), textureHandler.no_imageTexture, textureHandler.itemDisplayBg, textureHandler.itemDisplaySelected);
+            rangedItem = new ItemDisplay(new Vector2(74, 34), textureHandler.no_imageTexture, textureHandler.itemDisplayBg, textureHandler.itemDisplaySelected);
         }
 
         public void SwitchSelectedWeapon()

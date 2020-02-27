@@ -108,11 +108,11 @@ namespace UTDG
             stabDistance = 0.0f;
             isActive = true;
             isAttacking = false;
-            origin = new Vector2((int)dimensions.X / 2, (int)dimensions.Y/2);
+            origin = new Vector2((int)dimensions.X / 2, (int)dimensions.Y / 2);
         }
         public override void Attack(Vector2 target)
         {
-            if (isActive)
+            if (isActive && !isAttacking)
             {
                 if (target.X > position.X)
                     swingingRight = true;
@@ -134,7 +134,8 @@ namespace UTDG
             {                
                 if (attackType == Pickup_Melee.AttackType.STAB)
                 {
-                    origin.Y = dimensions.X / 2;
+                    origin.X = dimensions.X / 2;
+                    swingAngle = angle;
                     if(stabDistance < MAXSTAB)
                         stabDistance += swingRate;                    
                     else
@@ -175,7 +176,7 @@ namespace UTDG
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (isAttacking || (stabDistance > 0 && attackType == Pickup_Melee.AttackType.STAB))
-            {
+            {                
                 spriteBatch.Draw(weaponTexture, new Rectangle((int)position.X, (int)position.Y, (int)dimensions.X, (int)dimensions.Y), null, Color.White, swingAngle, origin, SpriteEffects.None, 1.0f);
             }
         }
