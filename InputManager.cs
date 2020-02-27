@@ -8,8 +8,12 @@ namespace UTDG
     public class PlayerInputManager
     {
         private float baseAcceleration = 1.0f;
-        private float acceleration;        
-
+        private float acceleration;
+        private MouseState lastMouseState;
+        public PlayerInputManager()
+        {
+            lastMouseState = Mouse.GetState();
+        }
         public void Update(Player player)
         {
             acceleration = baseAcceleration;
@@ -50,11 +54,16 @@ namespace UTDG
                 {
                     player.rangedHandler.Attack(player.camera.ScreenToWorld(new Vector2(mouse.X, mouse.Y)));
                 }
-                else if (player.heldItemManager.GetEquipedType() == HeldItemManager.Equiped.Melee)
+                if (lastMouseState.LeftButton == ButtonState.Released)
                 {
-                    player.meleeHandler.Attack(player.camera.ScreenToWorld(new Vector2(mouse.X, mouse.Y)));
+                    if (player.heldItemManager.GetEquipedType() == HeldItemManager.Equiped.Melee)
+                    {
+                        player.meleeHandler.Attack(player.camera.ScreenToWorld(new Vector2(mouse.X, mouse.Y)));
+                    }
                 }
             }
+
+            lastMouseState = mouse;
         }
     }
 }

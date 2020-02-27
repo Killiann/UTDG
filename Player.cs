@@ -23,11 +23,14 @@ namespace UTDG
         private float xVelocity;
         private float yVelocity;
 
+        private Vector2 origin;
+
         public bool isWalkingX;
         public bool isWalkingY;
 
         public float GetXVelocity() { return xVelocity; }
         public float GetYVelocity() { return yVelocity; }
+        public Vector2 GetOrigin() { return origin; }
         public float GetSpeedBoost() { return speedBoost; }
         public void SetXVelocity(float newVel){ xVelocity = newVel; }
         public void SetYVelocity(float newVel) { yVelocity = newVel; }
@@ -70,8 +73,9 @@ namespace UTDG
         public void Update(Camera camera)
         {
             this.camera = camera;
+            origin = new Vector2(dimensions.X / 2, dimensions.Y / 2);
 
-            collisionManager.Update(new Rectangle((int)position.X, (int)position.Y, (int)dimensions.X, (int)dimensions.Y));
+            collisionManager.Update(new Rectangle((int)position.X - (int)origin.X, (int)position.Y - (int)origin.Y, (int)dimensions.X, (int)dimensions.Y));
             inputManager.Update(this);
             physicsManager.Update(this);
             rangedHandler.Update(this);
@@ -83,7 +87,7 @@ namespace UTDG
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            base.Draw(spriteBatch);
+            spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, (int)dimensions.X, (int)dimensions.Y), null, Color.White, 0f, origin, SpriteEffects.None, 1f);
             rangedHandler.Draw(spriteBatch);
             meleeHandler.Draw(spriteBatch);
         }

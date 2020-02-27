@@ -36,7 +36,7 @@ namespace UTDG
 
         public void Draw(SpriteBatch spriteBatch)
         {            
-            spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, 20, 20), null, Color.White, angle, new Vector2(0.0f, 0.0f), SpriteEffects.None, 0); 
+            spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, 20, 20), null, Color.White, angle, new Vector2(texture.Width/2, texture.Height/2), SpriteEffects.None, 0); 
         }
     }
 }

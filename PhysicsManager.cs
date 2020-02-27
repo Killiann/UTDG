@@ -27,25 +27,25 @@ namespace UTDG
             if (player.GetYVelocity() < -maxVelocity) player.SetYVelocity(-maxVelocity);
 
             //check that player doesn't leave map bounds
-            if (player.GetPosition().X + player.GetXVelocity() + player.GetDimensions().X > collisionManager.GetMapBounds().Width)
+            if (player.GetPosition().X + player.GetXVelocity() + player.GetOrigin().X > collisionManager.GetMapBounds().Width)
             {
                 player.SetXVelocity(0);
-                player.SetXPosition(collisionManager.GetMapBounds().Width - player.GetDimensions().X);
+                player.SetXPosition(collisionManager.GetMapBounds().Width - player.GetOrigin().X);
             }
-            if (player.GetPosition().X + player.GetXVelocity() < 0)
+            if (player.GetPosition().X + player.GetXVelocity() - player.GetOrigin().X < 0)
             {
                 player.SetXVelocity(0);
-                player.SetXPosition(0);
+                player.SetXPosition(player.GetOrigin().X);
             }
-            if (player.GetPosition().Y + player.GetYVelocity() + player.GetDimensions().Y > collisionManager.GetMapBounds().Height)
+            if (player.GetPosition().Y + player.GetYVelocity() + player.GetOrigin().Y > collisionManager.GetMapBounds().Height)
             {
                 player.SetYVelocity(0);
-                player.SetYPosition(collisionManager.GetMapBounds().Height - player.GetDimensions().Y);
+                player.SetYPosition(collisionManager.GetMapBounds().Height - player.GetOrigin().Y);
             }
-            if (player.GetPosition().Y + player.GetYVelocity() < 0)
+            if (player.GetPosition().Y + player.GetYVelocity() - player.GetOrigin().Y< 0)
             {
                 player.SetYVelocity(0);
-                player.SetYPosition(0);
+                player.SetYPosition(player.GetOrigin().Y);
             }
 
             //apply friction

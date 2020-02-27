@@ -82,14 +82,17 @@ namespace UTDG
 
     public class MeleeHandler : WeaponHandler
     {
-        private readonly float MAXSTAB = 200.0f;
-        private readonly float MAXROTATION = 1.0f;
+        private readonly float MAXSTAB = 100.0f;
+        private readonly float MAXROTATION = 2.0f;
 
         private float swingRate;
         private float rotation;
+        private float swingAngle;
         private float stabDistance;
+        private Vector2 origin;
 
         private bool isAttacking;
+        private bool swingingRight;
 
         private Vector2 dimensions;
         private Pickup_Melee.AttackType attackType;        
@@ -105,55 +108,75 @@ namespace UTDG
             stabDistance = 0.0f;
             isActive = true;
             isAttacking = false;
+            origin = new Vector2((int)dimensions.X / 2, (int)dimensions.Y/2);
         }
         public override void Attack(Vector2 target)
         {
             if (isActive)
             {
+                if (target.X > position.X)
+                    swingingRight = true;
+                else swingingRight = false;
+
+                stabDistance = 0.0f;
+                rotation = 0.0f;
+
                 double dx = target.X - position.X;
                 double dy = target.Y - position.Y;
                 angle = (float)Math.Atan2(dy, dx);
-                isAttacking = true;
+                isAttacking = true;                
             }
         }
         public override void Update(GameObj gameObj)
         {
-            position = gameObj.GetPosition();
+            position = new Vector2(gameObj.GetPosition().X, gameObj.GetPosition().Y);            
             if (isAttacking)
             {                
                 if (attackType == Pickup_Melee.AttackType.STAB)
                 {
+                    origin.Y = dimensions.X / 2;
                     if(stabDistance < MAXSTAB)
-                    {
-                        stabDistance += swingRate;
-                        position.X += (float)Math.Cos(angle) * stabDistance;
-                        position.Y += (float)Math.Sin(angle) * stabDistance;                        
-                    }
+                        stabDistance += swingRate;                    
                     else
-                    {
-                        stabDistance = 0.0f;
                         isAttacking = false;
-                    }
-                }else if(attackType == Pickup_Melee.AttackType.SWING)
+                }
+                else if(attackType == Pickup_Melee.AttackType.SWING)
                 {
+                    origin.X = 0;
+
                     if (rotation < MAXROTATION)
                     {
-                        rotation += swingRate;
-                        angle = angle + rotation - (MAXROTATION / 2);
+                        rotation += swingRate / 100;
+                        if (swingingRight)
+                            swingAngle = angle + rotation - (MAXROTATION / 2);
+                        else if (!swingingRight)
+                            swingAngle = angle - rotation + (MAXROTATION / 2);
                     }
                     else
                     {
-                        rotation = 0.0f;
+                        angle = 0.0f;
                         isAttacking = false;
                     }
                 }
             }
+            else
+            {
+                if (stabDistance > 0 && attackType == Pickup_Melee.AttackType.STAB)                
+                    stabDistance -= swingRate;                
+                else stabDistance = 0f;
+            }
+
+            if (attackType == Pickup_Melee.AttackType.STAB)
+            {
+                position.X += (float)Math.Cos(angle) * stabDistance;
+                position.Y += (float)Math.Sin(angle) * stabDistance;
+            }
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (isAttacking)
+            if (isAttacking || (stabDistance > 0 && attackType == Pickup_Melee.AttackType.STAB))
             {
-                spriteBatch.Draw(weaponTexture, new Rectangle((int)position.X, (int)position.Y, (int)dimensions.X, (int)dimensions.Y), null, Color.White, angle, position, SpriteEffects.None, 1.0f);
+                spriteBatch.Draw(weaponTexture, new Rectangle((int)position.X, (int)position.Y, (int)dimensions.X, (int)dimensions.Y), null, Color.White, swingAngle, origin, SpriteEffects.None, 1.0f);
             }
         }
     }
