@@ -72,6 +72,21 @@ namespace UTDG
             }
         }
 
+        public void Update(Player player, GameOverlay gameOverlay)
+        {
+            for(int i = 0; i < sceneObjects.Count; i++)
+            {
+                GameObj obj = sceneObjects[i];
+                if (player.collisionManager.IsColliding(((Item)obj).collisionManager.GetBounds()))
+                {
+                    player.PickupItem((Item)obj);
+                    if (obj.GetType() == typeof(Pickup_Melee)) gameOverlay.meleeItem.ChangeWeaponTexture(((Item)obj).GetTexture());
+                    else if (obj.GetType() == typeof(Pickup_Ranged)) gameOverlay.rangedItem.ChangeWeaponTexture(((Item)obj).GetTexture());
+                    RemoveObject(obj);
+                }
+            }
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             for(int i = 0; i < sceneObjects.Count; i++)

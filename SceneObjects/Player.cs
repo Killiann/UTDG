@@ -11,18 +11,14 @@ namespace UTDG
         private PlayerInputHandler inputManager;
         private PhysicsHandler physicsManager;
         public HeldItemHandler heldItemManager;
-        public RangedHandler rangedHandler;
-        public MeleeHandler meleeHandler;
-
-        private float speedMultiplier = 0.0f;
 
         public TileMap map;
         public Camera camera;
-        private float xVelocity;
-        private float yVelocity;
-
         private Vector2 origin;
 
+        private float xVelocity;
+        private float yVelocity;
+        private float speedMultiplier = 0.0f;
         public bool isWalkingX;
         public bool isWalkingY;
 
@@ -44,23 +40,13 @@ namespace UTDG
             inputManager = new PlayerInputHandler();
             physicsManager = new PhysicsHandler(collisionManager);
             heldItemManager = new HeldItemHandler();
-            rangedHandler = new RangedHandler();
-            meleeHandler = new MeleeHandler();
         }
 
         public void PickupItem(Item item)
         {
-            if (item.GetType() == typeof(Pickup_Melee))
-            {
-                heldItemManager.PickupItem(item);
-                meleeHandler.ChangeWeapon(item);
-            }            
-            else if (item.GetType() == typeof(Pickup_Ranged))
-            {
-                heldItemManager.PickupItem(item);
-                rangedHandler.ChangeWeapon(item);
-            }
-            else if (item.GetType() == typeof(StatBoost))
+            heldItemManager.PickupItem(item);
+
+            if (item.GetType() == typeof(StatBoost))
             {
                 StatBoost.StatType type = ((StatBoost)item).GetStatType();
                 if (type == StatBoost.StatType.SPEED)
@@ -76,18 +62,17 @@ namespace UTDG
             collisionManager.Update(new Rectangle((int)position.X - (int)origin.X, (int)position.Y - (int)origin.Y, (int)dimensions.X, (int)dimensions.Y));
             inputManager.Update(this);
             physicsManager.Update(this);
-            rangedHandler.Update(this);
-            meleeHandler.Update(this);
 
             position.X += xVelocity;
             position.Y += yVelocity;
+
+            heldItemManager.Update(this);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, (int)dimensions.X, (int)dimensions.Y), null, Color.White, 0f, origin, SpriteEffects.None, 1f);
-            rangedHandler.Draw(spriteBatch);
-            meleeHandler.Draw(spriteBatch);
+            heldItemManager.Draw(spriteBatch);
         }
     }
 }

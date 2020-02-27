@@ -25,6 +25,8 @@ namespace UTDG
         public Texture2D swordTexture;
         public Texture2D speedTexture;
 
+        public Texture2D tempGun;
+
         public void LoadContent(Game game)
         {
             //dynamic
@@ -45,6 +47,8 @@ namespace UTDG
             no_imageTexture = game.Content.Load<Texture2D>("images/no_image");
             swordTexture = game.Content.Load<Texture2D>("images/sword1");
             speedTexture = game.Content.Load<Texture2D>("images/speed");
+
+            tempGun = game.Content.Load<Texture2D>("images/guntesture");
         }
     }
 }

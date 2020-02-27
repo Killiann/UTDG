@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>/Users/killian/Documents/Monogame/UTDG/Content/images/itemDisplayBG.png</SourceFile>
-  <SourceTime>2020-02-27T20:16:41.1631112+01:00</SourceTime>
-  <DestFile>/Users/killian/Documents/Monogame/UTDG/Content/bin/DesktopGL/Content/images/itemDisplayBG.xnb</DestFile>
-  <DestTime>2020-02-27T21:11:10.6517524+01:00</DestTime>
+  <SourceFile>/Users/killian/Documents/Monogame/UTDG/Content/images/guntesture.png</SourceFile>
+  <SourceTime>2020-02-27T22:37:13+01:00</SourceTime>
+  <DestFile>/Users/killian/Documents/Monogame/UTDG/Content/bin/DesktopGL/Content/images/guntesture.xnb</DestFile>
+  <DestTime>2020-02-27T22:37:59.3804004+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2018-08-05T16:49:54+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

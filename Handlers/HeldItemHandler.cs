@@ -7,58 +7,73 @@ namespace UTDG
 {
     public class HeldItemHandler
     {
-        private Pickup_Melee meleeItem;
-        private Pickup_Ranged rangedItem;
-        public Pickup_Melee GetMeleeItem() { return meleeItem; }
-        public Pickup_Ranged GetRangedItem() { return rangedItem; }
+        public RangedHandler rangedHandler;
+        public MeleeHandler meleeHandler;
 
-        private Equiped equiped;
-        public enum Equiped
+        public enum WeaponType
         {
             None,
-            Melee,
-            Ranged
+            Ranged,
+            Melee
         }
 
         public HeldItemHandler()
         {
-            equiped = Equiped.None;
-        }
-
-        public void EquipItem(Equiped type)
-        {
-            equiped = type;
+            rangedHandler = new RangedHandler();
+            meleeHandler = new MeleeHandler();
         }
 
         public void SwitchEquiped()
         {
-            if (equiped == Equiped.Melee && rangedItem != null) equiped = Equiped.Ranged;
-            else if (equiped == Equiped.Ranged && meleeItem != null) equiped = Equiped.Melee;
+            if (rangedHandler.IsEquiped() && !meleeHandler.IsEmpty)
+            {
+                meleeHandler.Equip();
+                rangedHandler.UnEquip();
+            }
+
+            else if (meleeHandler.IsEquiped() && !rangedHandler.IsEmpty)
+            {
+                rangedHandler.Equip();
+                meleeHandler.UnEquip();
+            }
         }
 
-        public Item GetEquiped()
+        public WeaponType GetWeaponType() {
+            if (rangedHandler.IsEquiped()) return WeaponType.Ranged;
+            else if (meleeHandler.IsEquiped()) return WeaponType.Melee;
+            else return WeaponType.None;
+        }
+
+        public void Attack(Vector2 target)
         {
-            if (equiped == Equiped.Melee)
-                return meleeItem;
-            else if (equiped == Equiped.Ranged)
-                return rangedItem;
-            else return null;
+            if (rangedHandler.IsEquiped()) rangedHandler.Attack(target);
+            else if (meleeHandler.IsEquiped()) meleeHandler.Attack(target);
         }
 
-        public Equiped GetEquipedType() { return equiped; }
+        public void Update(Player player)
+        {
+            meleeHandler.Update(player);
+            rangedHandler.Update(player);
+        }
 
         public void PickupItem(Item item)
         {
             if(item.GetType() == typeof(Pickup_Ranged))
             {
-                rangedItem = (Pickup_Ranged)item;
-                equiped = Equiped.Ranged;
+                rangedHandler.ChangeWeapon(item);
+                meleeHandler.UnEquip();
             }
             else if(item.GetType() == typeof(Pickup_Melee))
             {
-                meleeItem = (Pickup_Melee)item;
-                equiped = Equiped.Melee;
+                meleeHandler.ChangeWeapon(item);
+                rangedHandler.UnEquip();
             }
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            rangedHandler.Draw(spriteBatch);
+            meleeHandler.Draw(spriteBatch);
         }
     }
 }

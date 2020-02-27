@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/k.comerford/source/repos/UTDG/Content/images/progressRed.png</SourceFile>
-  <SourceTime>2020-02-27T16:15:27.5990031+01:00</SourceTime>
-  <DestFile>C:/Users/k.comerford/source/repos/UTDG/Content/bin/DesktopGL/Content/images/progressRed.xnb</DestFile>
-  <DestTime>2020-02-27T16:16:21.2910872+01:00</DestTime>
+  <SourceFile>/Users/killian/Documents/Monogame/UTDG/Content/images/progressRed.png</SourceFile>
+  <SourceTime>2020-02-27T20:16:41.1640314+01:00</SourceTime>
+  <DestFile>/Users/killian/Documents/Monogame/UTDG/Content/bin/DesktopGL/Content/images/progressRed.xnb</DestFile>
+  <DestTime>2020-02-27T21:11:10.6765503+01:00</DestTime>
   <Importer>TextureImporter</Importer>
-  <ImporterTime>2018-08-05T14:17:44+02:00</ImporterTime>
+  <ImporterTime>2018-08-05T16:49:54+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
-  <ProcessorTime>2018-08-05T14:17:44+02:00</ProcessorTime>
+  <ProcessorTime>2018-08-05T16:49:54+02:00</ProcessorTime>
   <Parameters>
     <Key>ColorKeyColor</Key>
     <Value>255,0,255,255</Value>

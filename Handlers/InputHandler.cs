@@ -58,17 +58,9 @@ namespace UTDG
             MouseState mouse = Mouse.GetState();
             if(mouse.LeftButton == ButtonState.Pressed)
             {
-                if (player.heldItemManager.GetEquipedType() == HeldItemHandler.Equiped.Ranged)
-                {
-                    player.rangedHandler.Attack(player.camera.ScreenToWorld(new Vector2(mouse.X, mouse.Y)));
-                }
-                if (lastMouseState.LeftButton == ButtonState.Released)
-                {
-                    if (player.heldItemManager.GetEquipedType() == HeldItemHandler.Equiped.Melee)
-                    {
-                        player.meleeHandler.Attack(player.camera.ScreenToWorld(new Vector2(mouse.X, mouse.Y)));
-                    }
-                }
+                if(player.heldItemManager.GetWeaponType() == HeldItemHandler.WeaponType.Ranged
+                    || player.heldItemManager.GetWeaponType() == HeldItemHandler.WeaponType.Melee && lastMouseState.LeftButton == ButtonState.Released)
+                player.heldItemManager.Attack(player.camera.ScreenToWorld(new Vector2(mouse.X, mouse.Y)));
             }
 
             lastKeyboardState = keyboard;

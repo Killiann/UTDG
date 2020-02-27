@@ -37,7 +37,15 @@ namespace UTDG
                 rangedItem.UnSelect();
                 meleeItem.Select();
             }
-        }        
+        }
+
+        public void Update(Player player)
+        {
+            meleeItem.UnSelect();
+            rangedItem.UnSelect();
+            if (player.heldItemManager.GetWeaponType() == HeldItemHandler.WeaponType.Ranged) rangedItem.Select();
+            else if (player.heldItemManager.GetWeaponType() == HeldItemHandler.WeaponType.Melee) meleeItem.Select();
+        }
 
         public void Draw(SpriteBatch spriteBatch)
         {

@@ -42,8 +42,8 @@ namespace UTDG
             player = new Player(tileMap.GetPXPosition(new Vector2(10, 10)), textureHandler.playerTexture, tileMap);
 
             sceneObjectHandler = new SceneObjectHandler(tileMap);
-            sceneObjectHandler.AddObject(new Pickup_Ranged(tileMap.GetPXPosition(new Vector2(3, 3)), textureHandler.gunTexture, textureHandler.bulletTexture, 20.0f, 20.0f, 6));
-            sceneObjectHandler.AddObject(new Pickup_Melee(tileMap.GetPXPosition(new Vector2(5, 3)), textureHandler.healthTexture, textureHandler.swordTexture, 20.0f, 15f, Pickup_Melee.AttackType.STAB));                       
+            sceneObjectHandler.AddObject(new Pickup_Ranged(tileMap.GetPXPosition(new Vector2(3, 3)), textureHandler.gunTexture,textureHandler.bulletTexture,textureHandler.tempGun, 20.0f, 20.0f, 6));
+            sceneObjectHandler.AddObject(new Pickup_Melee(tileMap.GetPXPosition(new Vector2(5, 3)), textureHandler.healthTexture, textureHandler.swordTexture, 20.0f, 15f, Pickup_Melee.AttackType.SWING));                       
             sceneObjectHandler.AddObject(new StatBoost(tileMap.GetPXPosition(new Vector2(7, 3)), textureHandler.speedTexture, 1.5f, StatBoost.StatType.SPEED));            
         }
 
@@ -58,24 +58,8 @@ namespace UTDG
         {
             player.Update(camera);
             camera.SetPosition(player.GetPosition());
-            gameOverlay.meleeItem.UnSelect();
-            gameOverlay.rangedItem.UnSelect();
-            if (player.heldItemManager.GetEquipedType() == HeldItemHandler.Equiped.Melee) gameOverlay.meleeItem.Select();
-            else if (player.heldItemManager.GetEquipedType() == HeldItemHandler.Equiped.Ranged) gameOverlay.rangedItem.Select();
-
-
-            for(int i = 0; i < sceneObjectHandler.GetSceneObjects().Count; i++)
-            {
-                GameObj obj = sceneObjectHandler.GetSceneObjects()[i];
-
-                //picking up items (temp)
-                if (player.collisionManager.IsColliding(((Item)obj).collisionManager.GetBounds())){
-                    player.PickupItem((Item)obj);
-                    if (obj.GetType() == typeof(Pickup_Melee)) gameOverlay.meleeItem.ChangeWeaponTexture(((Item)obj).GetTexture());
-                    else if (obj.GetType() == typeof(Pickup_Ranged)) gameOverlay.rangedItem.ChangeWeaponTexture(((Item)obj).GetTexture());
-                    sceneObjectHandler.RemoveObject(obj);
-                }
-            }            
+            gameOverlay.Update(player);
+            sceneObjectHandler.Update(player, gameOverlay);     
 
             base.Update(gameTime);
         }

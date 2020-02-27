@@ -53,15 +53,16 @@ namespace UTDG
         private readonly float damage;
         private readonly float speed;
         private readonly int fireRate;
-
+        private readonly Texture2D gunTexture;
         private Texture2D bulletTexture;
         //private Texture2D gunTexture;
 
-        public Pickup_Ranged(Vector2 position, Texture2D texture, Texture2D bulletTexture, float damage, float speed, int fireRate) : base(position, texture)
+        public Pickup_Ranged(Vector2 position, Texture2D texture, Texture2D bulletTexture, Texture2D gunTexture, float damage, float speed, int fireRate) : base(position, texture)
         {
             itemType = ItemType.Ranged;
 
             this.bulletTexture = bulletTexture;
+            this.gunTexture = gunTexture;
             this.damage = damage;
             this.speed = speed;
             this.fireRate = fireRate;
@@ -70,7 +71,7 @@ namespace UTDG
         public float GetDamage() { return damage; }
         public float GetSpeed() { return speed; }
         public int GetFireRate() { return fireRate; }
-        public Texture2D getGunTexture() { return texture; }
+        public Texture2D getGunTexture() { return gunTexture; }
         public Texture2D getBulletTexture() { return bulletTexture; }
     }
 
