@@ -17,8 +17,8 @@ namespace UTDG
         public void Update(Player player)
         {
             acceleration = baseAcceleration;
-            if (player.GetSpeedBoost() > 0)
-                acceleration *= player.GetSpeedBoost();
+            if (player.GetSpeedMultiplier() > 0)
+                acceleration *= player.GetSpeedMultiplier();
 
             //handle keyboard
             KeyboardState keyboard = Keyboard.GetState();

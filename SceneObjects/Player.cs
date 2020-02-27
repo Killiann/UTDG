@@ -7,8 +7,6 @@ namespace UTDG
 {
     public class Player : GameObj
     {        
-        private float speed;
-
         public CollisionHandler collisionManager;
         private PlayerInputHandler inputManager;
         private PhysicsHandler physicsManager;
@@ -16,7 +14,7 @@ namespace UTDG
         public RangedHandler rangedHandler;
         public MeleeHandler meleeHandler;
 
-        private float speedBoost = 0.0f;
+        private float speedMultiplier = 0.0f;
 
         public TileMap map;
         public Camera camera;
@@ -31,14 +29,14 @@ namespace UTDG
         public float GetXVelocity() { return xVelocity; }
         public float GetYVelocity() { return yVelocity; }
         public Vector2 GetOrigin() { return origin; }
-        public float GetSpeedBoost() { return speedBoost; }
+        public float GetSpeedMultiplier() { return speedMultiplier; }
         public void SetXVelocity(float newVel){ xVelocity = newVel; }
         public void SetYVelocity(float newVel) { yVelocity = newVel; }
 
         public Player(Vector2 position, Texture2D texture, TileMap map)
         {
             this.texture = texture;
-            this.position = position;
+            this.position = new Vector2(position.X + texture.Width/2, position.Y+texture.Height/2);
             this.map = map;
 
             dimensions = new Vector2(texture.Width, texture.Height);
@@ -66,7 +64,7 @@ namespace UTDG
             {
                 StatBoost.StatType type = ((StatBoost)item).GetStatType();
                 if (type == StatBoost.StatType.SPEED)
-                    speedBoost += ((StatBoost)item).GetStatChange();
+                    speedMultiplier += ((StatBoost)item).GetStatChange();
             }
         }
 

@@ -17,8 +17,8 @@ namespace UTDG
         {
             //apply speedboost
             maxVelocity = maxBaseVelocity;
-            if (player.GetSpeedBoost() > 0)
-                maxVelocity *= player.GetSpeedBoost();
+            if (player.GetSpeedMultiplier() > 0)
+                maxVelocity *= player.GetSpeedMultiplier();
 
             //cap velocity
             if (player.GetXVelocity() > maxVelocity) player.SetXVelocity(maxVelocity);

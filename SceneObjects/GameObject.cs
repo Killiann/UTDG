@@ -44,6 +44,7 @@ namespace UTDG
             collisionManager = new ItemCollisionHandler(new Rectangle((int)position.X, (int)position.Y, (int)dimensions.X, (int)dimensions.Y));
         }
 
+        public Texture2D GetTexture() { return texture; }
         public ItemType GetItemType() { return itemType; }
     }
 
