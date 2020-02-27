@@ -79,6 +79,8 @@ namespace UTDG
         bool isEmpty;
         private readonly int bgOffset = 2;
         private readonly int size = 64;
+        public bool IsSelected() { return isSelected; }
+        public bool IsEmpty() { return isEmpty; }
 
         public ItemDisplay(Vector2 position, Texture2D texture, Texture2D backgroundTexture, Texture2D selectedTexture): base(position, texture)
         {

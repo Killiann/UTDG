@@ -30,6 +30,12 @@ namespace UTDG
             equiped = type;
         }
 
+        public void SwitchEquiped()
+        {
+            if (equiped == Equiped.Melee && rangedItem != null) equiped = Equiped.Ranged;
+            else if (equiped == Equiped.Ranged && meleeItem != null) equiped = Equiped.Melee;
+        }
+
         public Item GetEquiped()
         {
             if (equiped == Equiped.Melee)

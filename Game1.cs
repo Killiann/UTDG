@@ -58,6 +58,10 @@ namespace UTDG
         {
             player.Update(camera);
             camera.SetPosition(player.GetPosition());
+            gameOverlay.meleeItem.UnSelect();
+            gameOverlay.rangedItem.UnSelect();
+            if (player.heldItemManager.GetEquipedType() == HeldItemHandler.Equiped.Melee) gameOverlay.meleeItem.Select();
+            else if (player.heldItemManager.GetEquipedType() == HeldItemHandler.Equiped.Ranged) gameOverlay.rangedItem.Select();
 
             for (int i = 0; i < gameObjects.Count; i++)
             {
@@ -66,8 +70,8 @@ namespace UTDG
                     player.PickupItem((Item)gameObjects[i]);
 
                     //swap weapon display UI
-                    if (gameObjects[i].GetType() == typeof(Pickup_Melee))
-                        gameOverlay.meleeItem.ChangeWeaponTexture(((Item)gameObjects[i]).GetTexture());
+                    if (gameObjects[i].GetType() == typeof(Pickup_Melee))                    
+                        gameOverlay.meleeItem.ChangeWeaponTexture(((Item)gameObjects[i]).GetTexture());                    
                     else if (gameObjects[i].GetType() == typeof(Pickup_Ranged))
                         gameOverlay.rangedItem.ChangeWeaponTexture(((Item)gameObjects[i]).GetTexture());
 

@@ -10,6 +10,8 @@ namespace UTDG
         private float baseAcceleration = 1.0f;
         private float acceleration;
         private MouseState lastMouseState;
+        private KeyboardState lastKeyboardState;
+
         public PlayerInputHandler()
         {
             lastMouseState = Mouse.GetState();
@@ -46,6 +48,12 @@ namespace UTDG
                 player.SetXVelocity(player.GetXVelocity() + acceleration);
             }
 
+            //switch Weapon
+            if (keyboard.IsKeyDown(Keys.E) && lastKeyboardState.IsKeyUp(Keys.E))
+            {
+                player.heldItemManager.SwitchEquiped();
+            }
+
             //handle mouse
             MouseState mouse = Mouse.GetState();
             if(mouse.LeftButton == ButtonState.Pressed)
@@ -63,6 +71,7 @@ namespace UTDG
                 }
             }
 
+            lastKeyboardState = keyboard;
             lastMouseState = mouse;
         }
     }

@@ -25,6 +25,20 @@ namespace UTDG
             rangedItem = new ItemDisplay(new Vector2(74, 45), textureHandler.no_imageTexture, textureHandler.itemDisplayBg, textureHandler.itemDisplaySelected);
         }
 
+        public void SwitchSelectedWeapon()
+        {
+            if (meleeItem.IsSelected() && !rangedItem.IsEmpty())
+            {
+                meleeItem.UnSelect();
+                rangedItem.Select();
+            }
+            else if (rangedItem.IsSelected() && !meleeItem.IsEmpty())
+            {
+                rangedItem.UnSelect();
+                meleeItem.Select();
+            }
+        }        
+
         public void Draw(SpriteBatch spriteBatch)
         {
             healthBar.Draw(spriteBatch);
