@@ -11,6 +11,10 @@ namespace UTDG
         private PlayerInputHandler inputManager;
         private PhysicsHandler physicsManager;
         public HeldItemHandler heldItemManager;
+        private SceneObjectHandler objectHandler;
+        private GameOverlay overlay;
+
+        public Item canPickup = null;        
 
         public TileMap map;
         public Camera camera;
@@ -29,24 +33,42 @@ namespace UTDG
         public void SetXVelocity(float newVel){ xVelocity = newVel; }
         public void SetYVelocity(float newVel) { yVelocity = newVel; }
 
-        public Player(Vector2 position, Texture2D texture, TileMap map)
+        public Player(Vector2 position, Texture2D texture, TileMap map, SceneObjectHandler objectHandler, GameOverlay overlay)
         {
             this.texture = texture;
             this.position = new Vector2(position.X + texture.Width/2, position.Y+texture.Height/2);
             this.map = map;
+            this.objectHandler = objectHandler;
+            this.overlay = overlay;
 
             dimensions = new Vector2(texture.Width, texture.Height);
             collisionManager = new PlayerCollisionHandler(this.map);
             inputManager = new PlayerInputHandler();
             physicsManager = new PhysicsHandler(collisionManager);
             heldItemManager = new HeldItemHandler();
-        }
+        }                           
 
         public void PickupItem(Item item)
         {
-            heldItemManager.PickupItem(item);
+            Type itemType = item.GetType();
+            Item oldItem = null;
+            if (itemType == typeof(Pickup_Melee) && heldItemManager.meleeHandler.GetCurrentItem() != null)
+                oldItem = heldItemManager.meleeHandler.GetCurrentItem();
+            else if (itemType == typeof(Pickup_Ranged) && heldItemManager.rangedHandler.GetCurrentItem() != null)
+                oldItem = heldItemManager.rangedHandler.GetCurrentItem();
 
-            if (item.GetType() == typeof(StatBoost))
+            objectHandler.RemoveObject(item);
+            if (oldItem != null) {
+                oldItem.SetXPosition(item.GetPosition().X);
+                oldItem.SetYPosition(item.GetPosition().Y);
+                objectHandler.AddObject(oldItem);
+            }            
+
+            //pickup new
+            heldItemManager.PickupItem(item);            
+            overlay.UpdateWeaponDisplay(this);            
+
+            if (itemType == typeof(StatBoost))
             {
                 StatBoost.StatType type = ((StatBoost)item).GetStatType();
                 if (type == StatBoost.StatType.SPEED)
@@ -62,6 +84,10 @@ namespace UTDG
             collisionManager.Update(new Rectangle((int)position.X - (int)origin.X, (int)position.Y - (int)origin.Y, (int)dimensions.X, (int)dimensions.Y));
             inputManager.Update(this);
             physicsManager.Update(this);
+
+            if (canPickup != null && canPickup.GetType() == typeof(StatBoost))
+                PickupItem(canPickup);
+            canPickup = null;
 
             position.X += xVelocity;
             position.Y += yVelocity;

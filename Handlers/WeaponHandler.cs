@@ -14,8 +14,10 @@ namespace UTDG
         protected float angle;
         protected Texture2D weaponTexture;
         public CollisionHandler collisionManager;
+        protected Item currentItem;
 
         protected bool IsActive() { return isEquiped; }
+        public Item GetCurrentItem() { return currentItem; }
 
         public WeaponHandler()
         {
@@ -52,6 +54,7 @@ namespace UTDG
             bulletTexture = ((Pickup_Ranged)newGun).getBulletTexture();
             isEquiped = true;
             IsEmpty = false;
+            currentItem = newGun;
         }
         public override void Attack(Vector2 target)
         {
@@ -117,6 +120,7 @@ namespace UTDG
             isAttacking = false;
             origin = new Vector2((int)dimensions.X / 2, (int)dimensions.Y / 2);
             IsEmpty = false;
+            currentItem = item;
         }
 
         public override void Attack(Vector2 target)

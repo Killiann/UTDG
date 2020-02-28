@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace UTDG
 {
-    class SceneObjectHandler
+    public class SceneObjectHandler
     {
         private List<GameObj> sceneObjects;
         private TileMap tileMap;
@@ -79,12 +79,14 @@ namespace UTDG
                 GameObj obj = sceneObjects[i];
                 if (player.collisionManager.IsColliding(((Item)obj).collisionManager.GetBounds()))
                 {
-                    player.PickupItem((Item)obj);
-                    if (obj.GetType() == typeof(Pickup_Melee)) gameOverlay.meleeItem.ChangeWeaponTexture(((Item)obj).GetTexture());
-                    else if (obj.GetType() == typeof(Pickup_Ranged)) gameOverlay.rangedItem.ChangeWeaponTexture(((Item)obj).GetTexture());
-                    RemoveObject(obj);
+                    player.canPickup = ((Item)obj);                    
                 }
             }
+        }
+
+        public void HasPickedUp(Item item)
+        {
+            
         }
 
         public void Draw(SpriteBatch spriteBatch)

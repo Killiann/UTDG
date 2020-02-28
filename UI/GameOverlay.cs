@@ -47,6 +47,14 @@ namespace UTDG
             else if (player.heldItemManager.GetWeaponType() == HeldItemHandler.WeaponType.Melee) meleeItem.Select();
         }
 
+        public void UpdateWeaponDisplay(Player player)
+        {
+            if(player.heldItemManager.meleeHandler.GetCurrentItem() != null)
+                meleeItem.ChangeWeaponTexture(player.heldItemManager.meleeHandler.GetCurrentItem().GetTexture());
+            if (player.heldItemManager.rangedHandler.GetCurrentItem() != null)
+                rangedItem.ChangeWeaponTexture(player.heldItemManager.rangedHandler.GetCurrentItem().GetTexture());            
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             healthBar.Draw(spriteBatch);

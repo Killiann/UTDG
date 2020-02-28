@@ -48,6 +48,12 @@ namespace UTDG
                 player.SetXVelocity(player.GetXVelocity() + acceleration);
             }
 
+            //pickup Weapon
+            if(keyboard.IsKeyDown(Keys.F) && lastKeyboardState.IsKeyUp(Keys.F) && player.canPickup != null)
+            {
+                player.PickupItem(player.canPickup);
+            }
+
             //switch Weapon
             if (keyboard.IsKeyDown(Keys.E) && lastKeyboardState.IsKeyUp(Keys.E))
             {
