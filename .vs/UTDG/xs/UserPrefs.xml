@@ -1,12 +1,18 @@
 ﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="{E155F299-4A55-4F0D-85F3-C3A07707E8D6}|Default">
   <MonoDevelop.Ide.ItemProperties.UTDG PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Scene/MapGenerator.cs">
+    <Files>
+      <File FileName="Scene/TileMap.cs" Line="16" Column="31" />
+      <File FileName="Scene/MapGenerator.cs" Line="11" Column="2" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="UTDG" expanded="True">
             <Node name="UTDG" expanded="True">
-              <Node name="UI" expanded="True" />
+              <Node name="Scene" expanded="True">
+                <Node name="MapGenerator.cs" selected="True" />
+              </Node>
             </Node>
           </Node>
         </State>

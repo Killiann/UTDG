@@ -17,6 +17,7 @@
     <None Remove="Icon.ico" />
     <None Remove="Icon.bmp" />
     <None Remove="Content\fonts\TestFont.spritefont" />
+    <None Remove="Scene\RoomTypes.rtf" />
   </ItemGroup>
 
   <ItemGroup>

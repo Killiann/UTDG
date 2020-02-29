@@ -4,20 +4,20 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/k.comerford/source/repos/UTDG/Content/images/gun.png</File>
-    <File>C:/Users/k.comerford/source/repos/UTDG/Content/images/guntesture.png</File>
-    <File>C:/Users/k.comerford/source/repos/UTDG/Content/images/health.png</File>
-    <File>C:/Users/k.comerford/source/repos/UTDG/Content/images/itemDisplayBG.png</File>
-    <File>C:/Users/k.comerford/source/repos/UTDG/Content/images/itemDisplaySelected.png</File>
-    <File>C:/Users/k.comerford/source/repos/UTDG/Content/images/no_image.png</File>
-    <File>C:/Users/k.comerford/source/repos/UTDG/Content/images/player.png</File>
-    <File>C:/Users/k.comerford/source/repos/UTDG/Content/images/progressBg.png</File>
-    <File>C:/Users/k.comerford/source/repos/UTDG/Content/images/progressGreen.png</File>
-    <File>C:/Users/k.comerford/source/repos/UTDG/Content/images/progressRed.png</File>
-    <File>C:/Users/k.comerford/source/repos/UTDG/Content/images/speed.png</File>
-    <File>C:/Users/k.comerford/source/repos/UTDG/Content/images/Sword.png</File>
-    <File>C:/Users/k.comerford/source/repos/UTDG/Content/images/sword1.png</File>
-    <File>C:/Users/k.comerford/source/repos/UTDG/Content/images/tileMap.png</File>
+    <File>/Users/killian/Documents/Monogame/UTDG/Content/images/gun.png</File>
+    <File>/Users/killian/Documents/Monogame/UTDG/Content/images/guntesture.png</File>
+    <File>/Users/killian/Documents/Monogame/UTDG/Content/images/health.png</File>
+    <File>/Users/killian/Documents/Monogame/UTDG/Content/images/itemDisplayBG.png</File>
+    <File>/Users/killian/Documents/Monogame/UTDG/Content/images/itemDisplaySelected.png</File>
+    <File>/Users/killian/Documents/Monogame/UTDG/Content/images/no_image.png</File>
+    <File>/Users/killian/Documents/Monogame/UTDG/Content/images/player.png</File>
+    <File>/Users/killian/Documents/Monogame/UTDG/Content/images/progressBg.png</File>
+    <File>/Users/killian/Documents/Monogame/UTDG/Content/images/progressGreen.png</File>
+    <File>/Users/killian/Documents/Monogame/UTDG/Content/images/progressRed.png</File>
+    <File>/Users/killian/Documents/Monogame/UTDG/Content/images/speed.png</File>
+    <File>/Users/killian/Documents/Monogame/UTDG/Content/images/Sword.png</File>
+    <File>/Users/killian/Documents/Monogame/UTDG/Content/images/sword1.png</File>
+    <File>/Users/killian/Documents/Monogame/UTDG/Content/images/tileMap.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />
