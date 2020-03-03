@@ -10,9 +10,9 @@ namespace UTDG
     {
         private readonly int[,] map;
         private readonly int tileSize = 64;
-        private int roomCountW = 4;
-        private int roomCountH = 4;
-        private readonly int roomWidth = 10; //don't change
+        private int roomCountW = 5;
+        private int roomCountH = 5;
+        private readonly int roomWidth = 9; //don't change
         Texture2D tileMap;
         private MapGenerator mapGenerator;
 
@@ -26,11 +26,12 @@ namespace UTDG
             roomLayouts = new List<int[,]>();
             LoadRoomLayout();
             GenerateNewMap();
+            AddWallSides();
         }
 
         private void LoadRoomLayout()
         {
-            string path = Path.Combine(System.IO.Path.GetFullPath("../../../Scene/RoomTypes.txt"));
+            string path = Path.Combine(System.IO.Path.GetFullPath("../../../Scene/RoomTypes9x9.txt"));
 
             try
             {
@@ -131,6 +132,19 @@ namespace UTDG
             return rotatedRoom;   
         }
 
+
+        private void AddWallSides()
+        {
+            for(int x = 1; x < map.GetLength(0)-1; x++)
+            {
+                for(int y = 1; y< map.GetLength(1)-1; y++)
+                {
+                    if (map[x, y] == 0 && map[x, y - 1] == 1)
+                        map[x, y] = 2;
+                }
+            }
+        }
+
         public int GetWidth() { return map.GetLength(0) * tileSize; }
         public int GetHeight() { return map.GetLength(1) * tileSize; }
         public Vector2 GetPXPosition(Vector2 position) { return new Vector2(position.X * tileSize, position.Y * tileSize); }
@@ -143,10 +157,7 @@ namespace UTDG
             {
                 for (int y = 0; y < map.GetLength(1); y++)
                 {
-                    if(map[x,y] == 0)
-                        spriteBatch.Draw(tileMap, new Rectangle(x * tileSize, y*tileSize, tileSize, tileSize), Color.White);
-                    else
-                        spriteBatch.Draw(tileMap, new Rectangle(x * tileSize, y * tileSize, tileSize, tileSize), Color.Black);
+                    spriteBatch.Draw(tileMap, new Rectangle(x * tileSize, y*tileSize, tileSize, tileSize), new Rectangle(map[x, y] * tileSize, 0, tileSize-1, tileSize-1), Color.White);
                 }
             }
         }

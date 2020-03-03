@@ -169,7 +169,7 @@
 /processorParam:TextureFormat=Color
 /build:images/sword1.png
 
-#begin images/tileMap.png
+#begin images/tileset.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -179,5 +179,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:images/tileMap.png
+/build:images/tileset.png
 

@@ -8,7 +8,7 @@ namespace UTDG
     public class Camera
     {
         private Vector2 position;
-        private readonly float scale = 0.8f;
+        private readonly float scale = 0.5f;
         private readonly int viewportWidth;
         private readonly int viewportHeight;
         private readonly TileMap map;

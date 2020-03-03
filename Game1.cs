@@ -71,7 +71,7 @@ namespace UTDG
 
             //world
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
-            null, null, null, null, camera.TranslationMatrix);
+            SamplerState.PointClamp, null, null, null, camera.TranslationMatrix);
 
             tileMap.Draw(_spriteBatch);
             sceneObjectHandler.Draw(_spriteBatch);

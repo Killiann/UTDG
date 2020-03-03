@@ -31,7 +31,7 @@ namespace UTDG
         {
             //dynamic
             playerTexture = game.Content.Load<Texture2D>("images/player");
-            tileMapTexture = game.Content.Load<Texture2D>("images/tileMap");
+            tileMapTexture = game.Content.Load<Texture2D>("images/tileset");
             bulletTexture = game.Content.Load<Texture2D>("images/no_image");
 
             //UI
