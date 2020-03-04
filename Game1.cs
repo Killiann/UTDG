@@ -59,7 +59,6 @@ namespace UTDG
         protected override void Update(GameTime gameTime)
         {
             player.Update(camera);
-            camera.SetPosition(player.GetPosition());
             gameOverlay.Update(player);
             sceneObjectHandler.Update(player, gameOverlay);     
 

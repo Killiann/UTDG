@@ -84,11 +84,6 @@ namespace UTDG
             }
         }
 
-        public void HasPickedUp(Item item)
-        {
-            
-        }
-
         public void Draw(SpriteBatch spriteBatch)
         {
             for(int i = 0; i < sceneObjects.Count; i++)

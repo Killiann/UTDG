@@ -43,7 +43,10 @@ namespace UTDG
             this.texture = texture;
             collisionManager = new ItemCollisionHandler(new Rectangle((int)position.X, (int)position.Y, (int)dimensions.X, (int)dimensions.Y));
         }
-
+        public void UpdateCollisionBounds()
+        {
+            collisionManager = new ItemCollisionHandler(new Rectangle((int)position.X, (int)position.Y, (int)dimensions.X, (int)dimensions.Y));
+        }
         public Texture2D GetTexture() { return texture; }
         public ItemType GetItemType() { return itemType; }
     }

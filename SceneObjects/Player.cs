@@ -36,7 +36,7 @@ namespace UTDG
         public Player(Texture2D texture, TileMap map, SceneObjectHandler objectHandler, GameOverlay overlay)
         {
             this.texture = texture;
-            this.position = map.GetSpawn();
+            position = map.GetSpawn();
             this.map = map;
             this.objectHandler = objectHandler;
             this.overlay = overlay;
@@ -61,6 +61,7 @@ namespace UTDG
             if (oldItem != null) {
                 oldItem.SetXPosition(item.GetPosition().X);
                 oldItem.SetYPosition(item.GetPosition().Y);
+                oldItem.UpdateCollisionBounds();
                 objectHandler.AddObject(oldItem);
             }            
 
@@ -79,6 +80,7 @@ namespace UTDG
         public void Update(Camera camera)
         {
             this.camera = camera;
+            camera.SetPosition(position);
             origin = new Vector2(dimensions.X / 2, dimensions.Y / 2);
 
             inputManager.Update(this);

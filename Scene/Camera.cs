@@ -50,6 +50,7 @@ namespace UTDG
 
         public void SetPosition(Vector2 newPosition)
         {
+            position.Y = newPosition.Y;
             //xpos
             if ((newPosition.X - (viewportWidth / 2 / scale)) > 0
                 && newPosition.X + (viewportWidth / 2 / scale) < map.GetWidth())
