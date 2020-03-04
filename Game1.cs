@@ -20,6 +20,7 @@ namespace UTDG
         private TileMap tileMap;
         private Player player;
         private Camera camera;
+
         //private List<GameObj> gameObjects;
 
         public Game1()
@@ -40,7 +41,7 @@ namespace UTDG
             tileMap = new TileMap(textureHandler.tileMapTexture);
             camera = new Camera(GraphicsDevice.Viewport, tileMap);
             sceneObjectHandler = new SceneObjectHandler(tileMap);
-            player = new Player(tileMap.GetPXPosition(new Vector2(10, 10)), textureHandler.playerTexture, tileMap, sceneObjectHandler, gameOverlay);
+            player = new Player(textureHandler.playerTexture, tileMap, sceneObjectHandler, gameOverlay);
 
             sceneObjectHandler.AddObject(new Pickup_Ranged(tileMap.GetPXPosition(new Vector2(3, 3)), textureHandler.gunTexture,textureHandler.bulletTexture,textureHandler.tempGun, 20.0f, 20.0f, 6));
             sceneObjectHandler.AddObject(new Pickup_Melee(tileMap.GetPXPosition(new Vector2(5, 3)), textureHandler.healthTexture, textureHandler.swordTexture, 20.0f, 15f, Pickup_Melee.AttackType.SWING));

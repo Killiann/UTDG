@@ -33,10 +33,10 @@ namespace UTDG
         public void SetXVelocity(float newVel){ xVelocity = newVel; }
         public void SetYVelocity(float newVel) { yVelocity = newVel; }
 
-        public Player(Vector2 position, Texture2D texture, TileMap map, SceneObjectHandler objectHandler, GameOverlay overlay)
+        public Player(Texture2D texture, TileMap map, SceneObjectHandler objectHandler, GameOverlay overlay)
         {
             this.texture = texture;
-            this.position = new Vector2(position.X + texture.Width/2, position.Y+texture.Height/2);
+            this.position = map.GetSpawn();
             this.map = map;
             this.objectHandler = objectHandler;
             this.overlay = overlay;
@@ -81,7 +81,6 @@ namespace UTDG
             this.camera = camera;
             origin = new Vector2(dimensions.X / 2, dimensions.Y / 2);
 
-            collisionManager.Update(new Rectangle((int)position.X - (int)origin.X, (int)position.Y - (int)origin.Y, (int)dimensions.X, (int)dimensions.Y));
             inputManager.Update(this);
             physicsManager.Update(this);
 
@@ -89,6 +88,7 @@ namespace UTDG
                 PickupItem(canPickup);
             canPickup = null;
 
+            collisionManager.Update(this);
             position.X += xVelocity;
             position.Y += yVelocity;
 

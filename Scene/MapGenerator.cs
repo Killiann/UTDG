@@ -77,10 +77,16 @@ namespace UTDG
                 else if (pathValues[i + 1].X < pathValues[i].X) direction1 = Room.Direction.LEFT;
                 else if (pathValues[i + 1].Y < pathValues[i].Y) direction1 = Room.Direction.UP;
 
-                if (i == 0) rooms.Add(new Room(pathValues[i], direction1));
+                if (i == 0)
+                {
+                    Room startRoom = new Room(pathValues[i], direction1);
+                    startRoom.roomFunction = Room.RoomFunction.Spawn;
+                    rooms.Add(startRoom);
+                }
                 else rooms[i].AddDirection(direction1);
-
-                rooms.Add(new Room(pathValues[i + 1], GetOpposite(direction1)));
+                Room nextRoom = new Room(pathValues[i + 1], GetOpposite(direction1));
+                if (i == pathValues.Count - 2) nextRoom.roomFunction = Room.RoomFunction.Finish;
+                rooms.Add(nextRoom);
             }
 
             List<Vector2> emptyRooms = new List<Vector2>();
@@ -329,11 +335,20 @@ namespace UTDG
     {
         public Vector2 position;
         public List<Direction> directions;
+        public RoomFunction roomFunction;
 
         private float textureRotation;
         private RoomType roomType;
 
         public RoomType GetRoomType() { return roomType; }
+
+        public enum RoomFunction
+        {
+            None,
+            Spawn,
+            Finish,
+            Item
+        }
 
         public enum Direction
         {
@@ -368,6 +383,7 @@ namespace UTDG
             this.position = position;
             directions.Add(direction);
             ResetType();
+            roomFunction = RoomFunction.None;
         }
 
         private void ResetType()
