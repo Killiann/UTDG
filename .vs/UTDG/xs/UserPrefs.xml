@@ -1,13 +1,15 @@
 ﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="{E155F299-4A55-4F0D-85F3-C3A07707E8D6}|Default">
   <MonoDevelop.Ide.ItemProperties.UTDG PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Scene/Camera.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SceneObjects/Player.cs">
     <Files>
-      <File FileName="Scene/TileMap.cs" Line="207" Column="60" />
-      <File FileName="Handlers/SceneObjectHandler.cs" Line="85" Column="10" />
-      <File FileName="SceneObjects/Player.cs" Line="83" Column="42" />
-      <File FileName="SceneObjects/GameObject.cs" Line="46" Column="42" />
-      <File FileName="Scene/Camera.cs" Line="1" Column="1" />
-      <File FileName="Game1.cs" Line="62" Column="1" />
+      <File FileName="Scene/Camera.cs" Line="50" Column="1" />
+      <File FileName="Handlers/CollisionHandler.cs" Line="48" Column="40" />
+      <File FileName="Game1.cs" Line="79" Column="32" />
+      <File FileName="SceneObjects/Bullet.cs" Line="16" Column="19" />
+      <File FileName="SceneObjects/GameObject.cs" Line="25" Column="133" />
+      <File FileName="Handlers/WeaponHandler.cs" Line="59" Column="10" />
+      <File FileName="Handlers/HeldItemHandler.cs" Line="20" Column="27" />
+      <File FileName="SceneObjects/Player.cs" Line="48" Column="54" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -15,10 +17,10 @@
           <Node name="UTDG" expanded="True">
             <Node name="UTDG" expanded="True">
               <Node name="Handlers" expanded="True" />
-              <Node name="Scene" expanded="True">
-                <Node name="Camera.cs" selected="True" />
+              <Node name="Scene" expanded="True" />
+              <Node name="SceneObjects" expanded="True">
+                <Node name="Player.cs" selected="True" />
               </Node>
-              <Node name="SceneObjects" expanded="True" />
             </Node>
           </Node>
         </State>

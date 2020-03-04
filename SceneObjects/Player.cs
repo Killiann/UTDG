@@ -45,7 +45,7 @@ namespace UTDG
             collisionManager = new PlayerCollisionHandler(this.map);
             inputManager = new PlayerInputHandler();
             physicsManager = new PhysicsHandler(collisionManager);
-            heldItemManager = new HeldItemHandler();
+            heldItemManager = new HeldItemHandler(map);
         }                           
 
         public void PickupItem(Item item)

@@ -15,6 +15,7 @@ namespace UTDG
         private SceneObjectHandler sceneObjectHandler;
         private readonly TextureHandler textureHandler;
         private GameOverlay gameOverlay;
+        private FrameCounter _frameCounter = new FrameCounter();
 
         //scene objects
         private TileMap tileMap;
@@ -68,6 +69,14 @@ namespace UTDG
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            _frameCounter.Update(deltaTime);
+
+            var fps = string.Format("FPS: {0}", _frameCounter.AverageFramesPerSecond);
+
+            Console.Clear();
+            Console.Write(fps);
 
             //world
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,

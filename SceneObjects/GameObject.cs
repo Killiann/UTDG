@@ -22,6 +22,7 @@ namespace UTDG
         public Vector2 GetDimensions() { return dimensions; }
         public void SetXPosition(float newXPosition) { position.X = newXPosition; }
         public void SetYPosition(float newYPosition) { position.Y = newYPosition; }
+        public Rectangle GetBounds() { return new Rectangle((int)position.X, (int)position.Y, (int)dimensions.X, (int)dimensions.Y); }
     }
 
     public class Item : GameObj

@@ -17,9 +17,9 @@ namespace UTDG
             Melee
         }
 
-        public HeldItemHandler()
+        public HeldItemHandler(TileMap tileMap)
         {
-            rangedHandler = new RangedHandler();
+            rangedHandler = new RangedHandler(tileMap);
             meleeHandler = new MeleeHandler();
         }
 

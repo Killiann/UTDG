@@ -41,10 +41,12 @@ namespace UTDG
         private float shootSpeed;
         private Texture2D bulletTexture;
         private List<Bullet> bullets;
+        private TileMap tileMap;
             
-        public RangedHandler()
+        public RangedHandler(TileMap tileMap)
         {
             bullets = new List<Bullet>();
+            this.tileMap = tileMap;
         }
         public override void ChangeWeapon(Item newGun)
         {
@@ -64,7 +66,7 @@ namespace UTDG
                 double dy = target.Y - position.Y;
                 angle = (float)Math.Atan2(dy, dx);
 
-                bullets.Add(new Bullet(position, angle, shootSpeed, bulletTexture));
+                bullets.Add(new Bullet(position, angle, shootSpeed, bulletTexture, tileMap));
                 fireCount = 0;
             }
         }
