@@ -2,12 +2,7 @@
   <MonoDevelop.Ide.ItemProperties.UTDG PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Scene/TileMap.cs">
     <Files>
-      <File FileName="SceneObjects/Enemy.cs" Line="20" Column="24" />
-      <File FileName="SceneObjects/GameObject.cs" Line="124" Column="1" />
-      <File FileName="Handlers/TextureHandler.cs" Line="14" Column="1" />
-      <File FileName="Handlers/CollisionHandler.cs" Line="111" Column="1" />
-      <File FileName="Scene/Camera.cs" Line="11" Column="43" />
-      <File FileName="SceneObjects/Player.cs" Line="44" Column="1" />
+      <File FileName="Scene/RoomTypes9x9.txt" Line="121" Column="2" />
       <File FileName="Scene/TileMap.cs" Line="1" Column="1" />
     </Files>
     <Pads>
@@ -15,7 +10,6 @@
         <State name="__root__">
           <Node name="UTDG" expanded="True">
             <Node name="UTDG" expanded="True">
-              <Node name="Handlers" expanded="True" />
               <Node name="Scene" expanded="True">
                 <Node name="TileMap.cs" selected="True" />
               </Node>

@@ -18,7 +18,13 @@ namespace UTDG
         Texture2D tileMap;
         private MapGenerator mapGenerator;
         private Vector2 playerSpawn;
-        private List<int[,]> roomLayouts;
+
+        private List<int[,]> room1Layouts;
+        private List<int[,]> room2Layouts;
+        private List<int[,]> room3Layouts;
+        private List<int[,]> room4Layouts;
+        private List<int[,]> room5Layouts;
+
         public List<Tile> tiles;
         private List<Vector2> enemySpawns;
 
@@ -35,7 +41,11 @@ namespace UTDG
             this.tileMap = tileMap;
             mapGenerator = new MapGenerator(roomCountW, roomCountH);
             map = new int[roomCountW * roomWidth, roomCountH * roomWidth];
-            roomLayouts = new List<int[,]>();
+            room1Layouts = new List<int[,]>();
+            room2Layouts = new List<int[,]>();
+            room3Layouts = new List<int[,]>();
+            room4Layouts = new List<int[,]>();
+            room5Layouts = new List<int[,]>();
             tiles = new List<Tile>();
 
             //generate map
@@ -49,6 +59,8 @@ namespace UTDG
         private void LoadRoomLayout()
         {
             string path = Path.Combine(System.IO.Path.GetFullPath("../../../Scene/RoomTypes9x9.txt"));
+            bool changeType = false;
+            int type = 1;
 
             try
             {
@@ -63,14 +75,29 @@ namespace UTDG
                         while (sr.Peek() >= 0)
                         {
                             char current = (char)sr.Read();
+                            if (changeType)
+                            {
+                                type = Convert.ToInt32(current.ToString());
+                                changeType = false;
+                            }
                             if (current == ';')
                             {
                                 isAdding = false;
                                 countx = 0;
                                 county = 0;
-                                roomLayouts.Add(currentArr);
+                                switch (type)
+                                {
+                                    case 1: room1Layouts.Add(currentArr); break;
+                                    case 2: room2Layouts.Add(currentArr); break;
+                                    case 3: room3Layouts.Add(currentArr); break;
+                                    case 4: room4Layouts.Add(currentArr); break;
+                                    case 5: room5Layouts.Add(currentArr); break;
+                                }
+
                                 currentArr = new int[roomWidth, roomWidth];
                             }
+                            else if (current == '+') changeType = true;
+
                             if (isAdding && current != ',' && current != ' ' && current != '\n')
                             {
                                 currentArr[countx, county] = Convert.ToInt32(current.ToString());
@@ -95,6 +122,7 @@ namespace UTDG
         public void GenerateNewMap()
         {
             List<Room> rooms = mapGenerator.GenerateGrid();
+            Random rnd = new Random();
             for (int i = 0; i < rooms.Count; i++)
             {
                 int startX = (int)rooms[i].position.X * roomWidth;
@@ -102,21 +130,21 @@ namespace UTDG
                 int[,] currentRoom = new int[roomWidth, roomWidth];
                 switch (rooms[i].GetRoomType())
                 {
-                    case Room.RoomType.UP: currentRoom = (int[,])RotateRoom(roomLayouts[0], 2).Clone(); break;
-                    case Room.RoomType.RIGHT: currentRoom = (int[,])RotateRoom(roomLayouts[0], 3).Clone(); break;
-                    case Room.RoomType.DOWN: currentRoom = (int[,])roomLayouts[0].Clone(); break;
-                    case Room.RoomType.LEFT: currentRoom = (int[,])RotateRoom(roomLayouts[0], 1).Clone(); break;
-                    case Room.RoomType.RIGHT_DOWN: currentRoom = (int[,])roomLayouts[1].Clone(); break;
-                    case Room.RoomType.UP_RIGHT: currentRoom = (int[,])RotateRoom(roomLayouts[1], 3).Clone(); break;
-                    case Room.RoomType.LEFT_UP: currentRoom = (int[,])RotateRoom(roomLayouts[1], 2).Clone(); break;
-                    case Room.RoomType.DOWN_LEFT: currentRoom = (int[,])RotateRoom(roomLayouts[1], 1).Clone(); break;
-                    case Room.RoomType.HALL_HORIZONTAL: currentRoom = (int[,])RotateRoom(roomLayouts[2], 1).Clone(); break;
-                    case Room.RoomType.HALL_VETICAL: currentRoom = (int[,])roomLayouts[2].Clone(); break;
-                    case Room.RoomType.UP_RIGHT_DOWN: currentRoom = (int[,])roomLayouts[3].Clone(); break;
-                    case Room.RoomType.LEFT_UP_RIGHT: currentRoom = (int[,])RotateRoom(roomLayouts[3], 3).Clone(); break;
-                    case Room.RoomType.DOWN_LEFT_UP: currentRoom = (int[,])RotateRoom(roomLayouts[3], 2).Clone(); break;
-                    case Room.RoomType.RIGHT_DOWN_LEFT: currentRoom = (int[,])RotateRoom(roomLayouts[3], 1).Clone(); break;
-                    case Room.RoomType.ALL: currentRoom = (int[,])roomLayouts[4].Clone();break;
+                    case Room.RoomType.UP: currentRoom = (int[,])RotateRoom(room1Layouts[rnd.Next(room1Layouts.Count)], 2).Clone(); break;
+                    case Room.RoomType.RIGHT: currentRoom = (int[,])RotateRoom(room1Layouts[rnd.Next(room1Layouts.Count)], 3).Clone(); break;
+                    case Room.RoomType.DOWN: currentRoom = (int[,])room1Layouts[rnd.Next(room1Layouts.Count)].Clone(); break;
+                    case Room.RoomType.LEFT: currentRoom = (int[,])RotateRoom(room1Layouts[rnd.Next(room1Layouts.Count)], 1).Clone(); break;
+                    case Room.RoomType.RIGHT_DOWN: currentRoom = (int[,])room2Layouts[rnd.Next(room2Layouts.Count)].Clone(); break;
+                    case Room.RoomType.UP_RIGHT: currentRoom = (int[,])RotateRoom(room2Layouts[rnd.Next(room2Layouts.Count)], 3).Clone(); break;
+                    case Room.RoomType.LEFT_UP: currentRoom = (int[,])RotateRoom(room2Layouts[rnd.Next(room2Layouts.Count)], 2).Clone(); break;
+                    case Room.RoomType.DOWN_LEFT: currentRoom = (int[,])RotateRoom(room2Layouts[rnd.Next(room2Layouts.Count)], 1).Clone(); break;
+                    case Room.RoomType.HALL_HORIZONTAL: currentRoom = (int[,])RotateRoom(room3Layouts[rnd.Next(room3Layouts.Count)], 1).Clone(); break;
+                    case Room.RoomType.HALL_VETICAL: currentRoom = (int[,])room3Layouts[rnd.Next(room3Layouts.Count)].Clone(); break;
+                    case Room.RoomType.UP_RIGHT_DOWN: currentRoom = (int[,])room4Layouts[rnd.Next(room4Layouts.Count)].Clone(); break;
+                    case Room.RoomType.LEFT_UP_RIGHT: currentRoom = (int[,])RotateRoom(room4Layouts[rnd.Next(room4Layouts.Count)], 3).Clone(); break;
+                    case Room.RoomType.DOWN_LEFT_UP: currentRoom = (int[,])RotateRoom(room4Layouts[rnd.Next(room4Layouts.Count)], 2).Clone(); break;
+                    case Room.RoomType.RIGHT_DOWN_LEFT: currentRoom = (int[,])RotateRoom(room4Layouts[rnd.Next(room4Layouts.Count)], 1).Clone(); break;
+                    case Room.RoomType.ALL: currentRoom = (int[,])room5Layouts[rnd.Next(room5Layouts.Count)].Clone();break;
                 }
 
                 if (rooms[i].roomFunction == Room.RoomFunction.Spawn) playerSpawn = new Vector2(startX + 4, startY + 4);
