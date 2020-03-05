@@ -4,6 +4,7 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
+    <File>/Users/killian/Documents/Monogame/UTDG/Content/images/enemy.png</File>
     <File>/Users/killian/Documents/Monogame/UTDG/Content/images/gun.png</File>
     <File>/Users/killian/Documents/Monogame/UTDG/Content/images/guntesture.png</File>
     <File>/Users/killian/Documents/Monogame/UTDG/Content/images/health.png</File>
@@ -20,6 +21,7 @@
     <File>/Users/killian/Documents/Monogame/UTDG/Content/images/tileset.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

@@ -20,9 +20,24 @@ namespace UTDG
 
         public Vector2 GetPosition() { return position; }
         public Vector2 GetDimensions() { return dimensions; }
-        public void SetXPosition(float newXPosition) { position.X = newXPosition; }
-        public void SetYPosition(float newYPosition) { position.Y = newYPosition; }
-        public Rectangle GetBounds() { return new Rectangle((int)position.X, (int)position.Y, (int)dimensions.X, (int)dimensions.Y); }
+        public virtual void SetXPosition(float newXPosition) { position.X = newXPosition; }
+        public virtual void SetYPosition(float newYPosition) { position.Y = newYPosition; }
+        public virtual Rectangle GetBounds() { return new Rectangle((int)position.X, (int)position.Y, (int)dimensions.X, (int)dimensions.Y); }
+    }
+
+    public class DynamicObj: GameObj
+    {
+        protected Vector2 velocity;
+        protected bool collidingHor;
+        protected bool collidingVer;
+        public bool IsCollidingHor() { return collidingHor; }
+        public void SetCollidingHor(bool newCollision) { collidingHor = newCollision; }
+        public bool IsCollidingVer() { return collidingVer; }
+        public void SetCollidingVer(bool newCollision) { collidingVer = newCollision; }
+
+        public void SetXVelocity(float newX) { velocity.X = newX; }
+        public void SetYVelocity(float newY) { velocity.Y = newY; }
+        public Vector2 GetVelocity() { return velocity; }
     }
 
     public class Item : GameObj

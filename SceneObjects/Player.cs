@@ -5,9 +5,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace UTDG
 {
-    public class Player : GameObj
+    public class Player : DynamicObj
     {        
-        public CollisionHandler collisionManager;
+        public EntityCollisionHandler collisionManager;
         private PlayerInputHandler inputManager;
         private PhysicsHandler physicsManager;
         public HeldItemHandler heldItemManager;
@@ -19,19 +19,13 @@ namespace UTDG
         public TileMap map;
         public Camera camera;
         private Vector2 origin;
-
-        private float xVelocity;
-        private float yVelocity;
+        
         private float speedMultiplier = 0.0f;
         public bool isWalkingX;
         public bool isWalkingY;
-
-        public float GetXVelocity() { return xVelocity; }
-        public float GetYVelocity() { return yVelocity; }
+        
         public Vector2 GetOrigin() { return origin; }
-        public float GetSpeedMultiplier() { return speedMultiplier; }
-        public void SetXVelocity(float newVel){ xVelocity = newVel; }
-        public void SetYVelocity(float newVel) { yVelocity = newVel; }
+        public float GetSpeedMultiplier() { return speedMultiplier; }        
 
         public Player(Texture2D texture, TileMap map, SceneObjectHandler objectHandler, GameOverlay overlay)
         {
@@ -42,11 +36,26 @@ namespace UTDG
             this.overlay = overlay;
 
             dimensions = new Vector2(texture.Width, texture.Height);
-            collisionManager = new PlayerCollisionHandler(this.map);
+            collisionManager = new EntityCollisionHandler(this.map);
             inputManager = new PlayerInputHandler();
             physicsManager = new PhysicsHandler(collisionManager);
             heldItemManager = new HeldItemHandler(map);
-        }                           
+        }
+
+        public override Rectangle GetBounds()
+        {
+            return new Rectangle((int)position.X - (int)dimensions.X / 2, (int)position.Y, (int)dimensions.X, (int)dimensions.X);
+        }
+
+        public override void SetXPosition(float newXPosition)
+        {
+            position.X = newXPosition + (int)dimensions.X / 2;
+        }
+
+        public override void SetYPosition(float newYPosition)
+        {
+            position.Y = newYPosition;
+        }
 
         public void PickupItem(Item item)
         {
@@ -91,8 +100,7 @@ namespace UTDG
             canPickup = null;
 
             collisionManager.Update(this);
-            position.X += xVelocity;
-            position.Y += yVelocity;
+            position += velocity;
 
             heldItemManager.Update(this);
         }

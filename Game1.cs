@@ -22,6 +22,8 @@ namespace UTDG
         private Player player;
         private Camera camera;
 
+        public List<Enemy> enemies;
+
         //private List<GameObj> gameObjects;
 
         public Game1()
@@ -44,6 +46,14 @@ namespace UTDG
             sceneObjectHandler = new SceneObjectHandler(tileMap);
             player = new Player(textureHandler.playerTexture, tileMap, sceneObjectHandler, gameOverlay);
 
+            enemies = new List<Enemy>();
+            List<Vector2> enemySpawns = tileMap.GetEnemySpawns();
+
+            foreach(Vector2 pos in enemySpawns)
+            {
+                enemies.Add(new Enemy(pos, textureHandler.enemyTexture, tileMap));
+            }
+
             sceneObjectHandler.AddObject(new Pickup_Ranged(tileMap.GetPXPosition(new Vector2(3, 3)), textureHandler.gunTexture,textureHandler.bulletTexture,textureHandler.tempGun, 20.0f, 20.0f, 6));
             sceneObjectHandler.AddObject(new Pickup_Melee(tileMap.GetPXPosition(new Vector2(5, 3)), textureHandler.healthTexture, textureHandler.swordTexture, 20.0f, 15f, Pickup_Melee.AttackType.SWING));
             sceneObjectHandler.AddObject(new Pickup_Melee(tileMap.GetPXPosition(new Vector2(5, 5)), textureHandler.no_imageTexture, textureHandler.swordTexture, 20.0f, 15f, Pickup_Melee.AttackType.STAB));
@@ -62,6 +72,13 @@ namespace UTDG
             player.Update(camera);
             gameOverlay.Update(player);
             sceneObjectHandler.Update(player, gameOverlay);     
+
+            foreach(Enemy enemy in enemies)
+            {
+                enemy.Update();
+            }
+
+            //camera.SetPosition(enemies[0].GetPosition());
 
             base.Update(gameTime);
         }
@@ -84,6 +101,12 @@ namespace UTDG
 
             tileMap.Draw(_spriteBatch);
             sceneObjectHandler.Draw(_spriteBatch);
+
+            foreach(Enemy enemy in enemies)
+            {
+                enemy.Draw(_spriteBatch);
+            }
+
             player.Draw(_spriteBatch);
 
             _spriteBatch.End();

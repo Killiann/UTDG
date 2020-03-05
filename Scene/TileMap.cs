@@ -20,6 +20,7 @@ namespace UTDG
         private Vector2 playerSpawn;
         private List<int[,]> roomLayouts;
         public List<Tile> tiles;
+        private List<Vector2> enemySpawns;
 
         public int GetWidth() { return map.GetLength(0) * tileSize; }
         public int GetHeight() { return map.GetLength(1) * tileSize; }
@@ -27,6 +28,7 @@ namespace UTDG
         public int[,] GetTileMap() { return map; }
         public int GetTileSize() { return tileSize; }
         public Vector2 GetSpawn() { return GetPXPosition(playerSpawn); }
+        public List<Vector2> GetEnemySpawns() { return enemySpawns; }
 
         public TileMap(Texture2D tileMap)
         {
@@ -41,6 +43,7 @@ namespace UTDG
             GenerateNewMap();
             AddWallSides();
             ConvertToTiles();
+            enemySpawns = GenerateEnemySpawns();
         }
 
         private void LoadRoomLayout()
@@ -173,6 +176,24 @@ namespace UTDG
         public List<Tile> GetCollisionTiles()
         {
             return tiles.Where(x => x.CanCollide() == true).ToList();
+        }
+
+        private List<Vector2> GenerateEnemySpawns()
+        {
+            List<Vector2> enemySpawns = new List<Vector2>();
+            Random rnd = new Random();
+            for(int i=0;i<20; i++)
+            {
+                int xPos = rnd.Next(map.GetLength(0));
+                int yPos = rnd.Next(map.GetLength(1));
+                while (!(map[xPos, yPos] == 0 && (map[xPos, yPos+1] == 0 && !enemySpawns.Contains(GetPXPosition(new Vector2(xPos, yPos))) && (xPos > GetSpawn().X + 5 || xPos < GetSpawn().X - 5) && (yPos > GetSpawn().Y + 5 || yPos  < GetSpawn ().Y - 5))))
+                {
+                    xPos = rnd.Next(map.GetLength(0));
+                    yPos = rnd.Next(map.GetLength(1));
+                }
+                enemySpawns.Add(GetPXPosition(new Vector2(xPos, yPos - 1)));
+            }
+            return enemySpawns;
         }
 
         public void Draw(SpriteBatch spriteBatch)

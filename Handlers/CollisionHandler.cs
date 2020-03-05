@@ -62,7 +62,7 @@ namespace UTDG
         }
     }
 
-    public class PlayerCollisionHandler : CollisionHandler
+    public class EntityCollisionHandler : CollisionHandler
     {
         public enum Direction
         {
@@ -74,52 +74,43 @@ namespace UTDG
 
         private readonly List<Tile> mapTiles = new List<Tile>();
         private List<Tile> intersectingTiles = new List<Tile>();
-        private Player player;
+        private DynamicObj entity;
 
-        public PlayerCollisionHandler(TileMap map)
+        public EntityCollisionHandler(TileMap map)
         {
             this.map = map;
             mapTiles = map.GetCollisionTiles();
         }
 
-        public override void Update(GameObj p)
+        public new virtual void Update(GameObj e)
         {
-            player = (Player)p;
+            entity = (DynamicObj)e;
 
             //x axis tile collisions
-            bounds = new Rectangle((int)player.GetPosition().X - ((int)player.GetDimensions().X / 2) + (int)player.GetXVelocity(),
-                (int)player.GetPosition().Y,
-                (int)player.GetDimensions().X,
-                (int)player.GetDimensions().X);
-
+            bounds = new Rectangle(entity.GetBounds().X + (int)entity.GetVelocity().X, entity.GetBounds().Y, entity.GetBounds().Width, entity.GetBounds().Height);
             Rectangle inflatedBounds = bounds;
             inflatedBounds.Inflate(10, 10);
             intersectingTiles = mapTiles.Where(x => inflatedBounds.Intersects(x.GetBounds())).ToList();
 
-            if (player.GetXVelocity() > 0)
+            if (entity.GetVelocity().X > 0)
                 CheckAndHandleCollision(Direction.Right);
-            else if (player.GetXVelocity() < 0)
+            else if (entity.GetVelocity().X < 0)
                 CheckAndHandleCollision(Direction.Left);
             //y axis tile collisions
-
             inflatedBounds = bounds;
             inflatedBounds.Inflate(10, 10);
             intersectingTiles = mapTiles.Where(x => inflatedBounds.Intersects(x.GetBounds())).ToList();
 
-            bounds = new Rectangle((int)player.GetPosition().X - ((int)player.GetDimensions().X / 2),
-                (int)player.GetPosition().Y + (int)player.GetYVelocity(),
-                (int)player.GetDimensions().X,
-                (int)player.GetDimensions().X);
+            bounds = new Rectangle(entity.GetBounds().X, entity.GetBounds().Y + (int)entity.GetVelocity().Y, entity.GetBounds().Width, entity.GetBounds().Height);
 
-            if (player.GetYVelocity() > 0)
+            if (entity.GetVelocity().Y > 0)
                 CheckAndHandleCollision(Direction.Down);
-            else if (player.GetYVelocity() < 0)
+            else if (entity.GetVelocity().Y < 0)
                 CheckAndHandleCollision(Direction.Up);
         }
 
         private void CheckAndHandleCollision(Direction direction)
         {
-
             foreach (Tile t in intersectingTiles)
             {
                 if (bounds.Intersects(t.GetBounds()))
@@ -127,24 +118,41 @@ namespace UTDG
                     switch (direction)
                     {
                         case (Direction.Up):
-                            player.SetYVelocity(0);
-                            player.SetYPosition(t.GetBounds().Y + t.GetBounds().Height);
+                            entity.SetYVelocity(0);
+                            entity.SetCollidingVer(true);
+                            entity.SetYPosition(t.GetBounds().Y + t.GetBounds().Height);
                             break;
                         case (Direction.Right):
-                            player.SetXVelocity(0);
-                            player.SetXPosition(t.GetBounds().X - player.GetDimensions().X / 2);
+                            entity.SetXVelocity(0);
+                            entity.SetCollidingHor(true);
+                            entity.SetXPosition(t.GetBounds().X - t.GetBounds().Width);
                             break;
                         case (Direction.Down):
-                            player.SetYVelocity(0);
-                            player.SetYPosition(t.GetBounds().Y - player.GetDimensions().Y / 2);
+                            entity.SetYVelocity(0);
+                            entity.SetCollidingVer(true);
+                            entity.SetYPosition(t.GetBounds().Y - entity.GetBounds().Height);
                             break;
                         case (Direction.Left):
-                            player.SetXVelocity(0);
-                            player.SetXPosition(t.GetBounds().X + t.GetBounds().Width + player.GetDimensions().X / 2);
+                            entity.SetXVelocity(0);
+                            entity.SetCollidingHor(true);
+                            entity.SetXPosition(t.GetBounds().X + t.GetBounds().Width);
                             break;
                     }
                 }
             }
+        }
+    }
+
+    public class EnemyCollisionHandler : EntityCollisionHandler
+    {
+        private Enemy enemy;
+        public EnemyCollisionHandler(TileMap map) : base(map) { }
+        public override void Update(GameObj e)
+        {
+            base.Update(e);
+            enemy = (Enemy)e;
+            if (enemy.IsCollidingHor()) enemy.SetYVelocity(0);
+            if (enemy.IsCollidingVer()) enemy.SetXVelocity(0);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace UTDG
         public Texture2D playerTexture;
         public Texture2D tileMapTexture;
         public Texture2D bulletTexture;
+        public Texture2D enemyTexture;
 
         //UI
         public Texture2D progressBG;
@@ -33,6 +34,7 @@ namespace UTDG
             playerTexture = game.Content.Load<Texture2D>("images/player");
             tileMapTexture = game.Content.Load<Texture2D>("images/tileset");
             bulletTexture = game.Content.Load<Texture2D>("images/no_image");
+            enemyTexture = game.Content.Load<Texture2D>("images/enemy");
 
             //UI
             progressBG = game.Content.Load<Texture2D>("images/progressBg");

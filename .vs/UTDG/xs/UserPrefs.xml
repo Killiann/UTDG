@@ -1,15 +1,14 @@
 ﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="{E155F299-4A55-4F0D-85F3-C3A07707E8D6}|Default">
   <MonoDevelop.Ide.ItemProperties.UTDG PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="SceneObjects/Player.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Scene/TileMap.cs">
     <Files>
-      <File FileName="Scene/Camera.cs" Line="50" Column="1" />
-      <File FileName="Handlers/CollisionHandler.cs" Line="48" Column="40" />
-      <File FileName="Game1.cs" Line="79" Column="32" />
-      <File FileName="SceneObjects/Bullet.cs" Line="16" Column="19" />
-      <File FileName="SceneObjects/GameObject.cs" Line="25" Column="133" />
-      <File FileName="Handlers/WeaponHandler.cs" Line="59" Column="10" />
-      <File FileName="Handlers/HeldItemHandler.cs" Line="20" Column="27" />
-      <File FileName="SceneObjects/Player.cs" Line="48" Column="54" />
+      <File FileName="SceneObjects/Enemy.cs" Line="20" Column="24" />
+      <File FileName="SceneObjects/GameObject.cs" Line="124" Column="1" />
+      <File FileName="Handlers/TextureHandler.cs" Line="14" Column="1" />
+      <File FileName="Handlers/CollisionHandler.cs" Line="111" Column="1" />
+      <File FileName="Scene/Camera.cs" Line="11" Column="43" />
+      <File FileName="SceneObjects/Player.cs" Line="44" Column="1" />
+      <File FileName="Scene/TileMap.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -17,10 +16,10 @@
           <Node name="UTDG" expanded="True">
             <Node name="UTDG" expanded="True">
               <Node name="Handlers" expanded="True" />
-              <Node name="Scene" expanded="True" />
-              <Node name="SceneObjects" expanded="True">
-                <Node name="Player.cs" selected="True" />
+              <Node name="Scene" expanded="True">
+                <Node name="TileMap.cs" selected="True" />
               </Node>
+              <Node name="SceneObjects" expanded="True" />
             </Node>
           </Node>
         </State>

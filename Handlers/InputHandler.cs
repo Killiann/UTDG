@@ -30,22 +30,22 @@ namespace UTDG
             if (keyboard.IsKeyDown(Keys.W))
             {
                 player.isWalkingY = true;
-                player.SetYVelocity(player.GetYVelocity() - acceleration);   
+                player.SetYVelocity(player.GetVelocity().Y - acceleration);   
             }
             if (keyboard.IsKeyDown(Keys.A))
             {
                 player.isWalkingX = true;
-                player.SetXVelocity(player.GetXVelocity() - acceleration);
+                player.SetXVelocity(player.GetVelocity().X - acceleration);
             }
             if (keyboard.IsKeyDown(Keys.S))
             {
                 player.isWalkingY = true;
-                player.SetYVelocity(player.GetYVelocity() + acceleration);
+                player.SetYVelocity(player.GetVelocity().Y + acceleration);
             }
             if (keyboard.IsKeyDown(Keys.D))
             {
                 player.isWalkingX = true;
-                player.SetXVelocity(player.GetXVelocity() + acceleration);
+                player.SetXVelocity(player.GetVelocity().X + acceleration);
             }
 
             //pickup Weapon
