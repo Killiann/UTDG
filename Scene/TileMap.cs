@@ -267,7 +267,7 @@ namespace UTDG
             this.tileSize = tileSize;
             this.id = id;
             this.position = position;
-            this.bounds = new Rectangle((int)position.X, (int)position.Y, tileSize, tileSize);
+            bounds = new Rectangle((int)position.X, (int)position.Y, tileSize, tileSize);
         }
 
         public void Draw(SpriteBatch spriteBatch, Texture2D texture) {

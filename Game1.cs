@@ -75,7 +75,7 @@ namespace UTDG
 
             foreach(Enemy enemy in enemies)
             {
-                enemy.Update();
+                enemy.Update(player);
             }
 
             //camera.SetPosition(enemies[0].GetPosition());
